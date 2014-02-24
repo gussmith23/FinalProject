@@ -1,5 +1,6 @@
-#include <stdio.h>
+#include <cstdio>
 #include <stdlib.h>
+#include <iostream>
 
 using namespace std;
 
@@ -29,5 +30,9 @@ int main(int argc, char* argv[]){
 		case 4:
 		break;
 	}
+
+	cout << "Press any key to exit...";
+	getchar();
+	return 0;
 
 }
