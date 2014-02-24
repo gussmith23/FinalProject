@@ -12,7 +12,7 @@ class Line{
 		void setStr(std::string);
 		std::string getStr() const;
 		void setWordcount(int);
-		int getWordcont() const;
+		int getWordcount() const;
 		void setCharcount(int);
 		int getCharcount() const;
 
