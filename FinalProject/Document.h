@@ -17,6 +17,11 @@ class Document{
 		void setLineArray(Line*);
 		std::string getName() const;
 		void setName(std::string);
+
+		//functions
+		//1-4 loadDocument functions
+		void loadDocument(std::string);
+
 	private:
 		int linecount;
 		int wordcount;
