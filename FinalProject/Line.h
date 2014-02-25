@@ -7,6 +7,7 @@ class Line{
 		Line();
 		Line(std::string);
 		Line(std::string,int);
+		~Line();
 		
 		//setters and getters
 		void setStr(std::string);

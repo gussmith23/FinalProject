@@ -35,3 +35,7 @@ Line::Line(std::string strval, int idval){
 	id = idval;
 	str = strval; 
 }
+//destructor deletes the string
+Line::~Line(){
+	str.clear();
+}
