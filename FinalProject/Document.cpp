@@ -51,7 +51,7 @@ The function will read in the text file and create a new Line for each sentence 
 	equal to the location in the text file. After, set the linecount.*/
 void Document::loadDocument(string filename){
 	ifstream filestream; 
-	filestream.open(filename);
+	filestream.open(filename, std::ifstream::in);
 
 	/*now we iterate for every character in the stream.*/
 	//the line we'll be appending to
@@ -71,13 +71,14 @@ void Document::loadDocument(string filename){
 		line = line + c;
 
 		//now we check if we need to create a new line object.
-		if (c == ('.'||'!'||'?')){
+		if ((c=='.')||(c=='!')||(c=='?')){
 			//if true, we create a new line object.
-			Line(line, index);
+			Line l = Line(line, index);
 			//we reset the line string to empty
 			line = "";
 			//we increase the linecount
 			linecount++;
+
 		}
 
 		//increase the index

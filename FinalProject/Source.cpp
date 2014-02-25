@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <stdlib.h>
 #include <iostream>
+#include <Document.h>
 
 using namespace std;
 
@@ -30,6 +31,13 @@ int main(int argc, char* argv[]){
 		case 4:
 		break;
 	}
+
+
+	//debug workspace
+	Document doc("foo");
+	doc.loadDocument("foo.txt");
+	cout << "linecount: " << doc.getLinecount() << endl;
+
 
 	cout << "Press any key to exit...";
 	getchar();
