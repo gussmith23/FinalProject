@@ -135,3 +135,34 @@ vector<string> Line::parseWords(){
 
 	return words;
 }
+/*1-9 Create a function in Line called parseChar that takes in value and returns an
+array of chars. This array should be filled with the characters from the Line.*/
+vector<char> Line::parseChar(int value){
+	//the vector to return - it has one element for each char in the string.
+	vector<char> charArray;
+	//iterate for each char in the string.
+	for(int i = 0; i < str.length(); i++){
+		charArray.push_back(str[i]);
+	}
+
+	return charArray;
+}
+/*1-10 Overload parseChar to now take an array of strings and returns and array of
+char based on the array of strings given.*/
+vector<char> Line::parseChar(string* stringArray, int length){
+	//we'll dump all chars here 
+	vector<char> charVector;
+	//iterate through all strings
+	for(int i = 0; i < length; i++){
+		//the string we're focusing on
+		string stringFromArray = stringArray[i];
+		//now we iterate through each character
+		for(int j = 0; j < stringFromArray.length(); j++){
+			//we put the next char on the vector
+			charVector.push_back(stringFromArray[j]);
+		}
+
+	}
+
+	return charVector;
+}

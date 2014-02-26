@@ -1,20 +1,26 @@
-﻿Build started 2/25/2014 8:53:32 PM.
+﻿Build started 2/26/2014 2:10:11 PM.
      1>Project "E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\FinalProject\FinalProject.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Document.cpp Line.cpp main.cpp
-         main.cpp
-         Line.cpp
-         Document.cpp
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(42): warning C4018: '<' : signed/unsigned mismatch
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(144): warning C4018: '<' : signed/unsigned mismatch
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Plot.cpp
+         Plot.cpp
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(65): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(71): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(81): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(87): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(97): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(98): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.lib" /MACHINE:X86 Debug\Document.obj
          Debug\main.obj
          Debug\Line.obj
+         Debug\Plot.obj
          FinalProject.vcxproj -> E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.exe
      1>Done Building Project "E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\FinalProject\FinalProject.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.59
+Time Elapsed 00:00:01.17

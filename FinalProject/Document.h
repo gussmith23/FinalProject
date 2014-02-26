@@ -24,9 +24,13 @@ class Document{
 
 		//functions
 		//1-4 loadDocument functions
-		void loadDocument(std::string);
+		int loadDocument(std::string);
 		//1-7 outputDocument
 		void outputDocument(string);
+		//1-11 parseWords
+		vector<string> parseWords();
+		//1-12 parseChar
+		vector<char> parseChar();
 
 	private:
 		int linecount;

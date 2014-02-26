@@ -22,7 +22,12 @@ class Line{
 		int getCharcount() const;
 
 		//functions
+		//1-8
 		vector<string> parseWords();
+		//1-9
+		vector<char> parseChar(int);
+		//1-10
+		vector<char> parseChar(string*, int);
 
 	private:
 		std::string str;
