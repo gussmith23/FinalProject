@@ -146,13 +146,18 @@ int main(int argc, char* argv[]){
 					case 'a':
 						{
 							Plot p = Plot();
+							/*
 							cout<< "Please enter your x coordinate: ";
 							int x,y;
 							cin >> x;
 							cout << endl << "Please enter your y coordinate: ";
 							cin >> y;
 							cout << endl;
-							p.plot2D(x,y,3,4);
+							*/
+							double x[3] = {36,16,60};
+							double y[3] = {17,5,8};
+
+							p.plot2D(x,y,3);
 						}
 						break;
 					case'b':

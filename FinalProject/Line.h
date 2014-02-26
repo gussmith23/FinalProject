@@ -7,6 +7,7 @@ using namespace std;
 class Line{
 	public:
 		int id;
+
 		//constructors and deconstructors
 		Line();
 		Line(std::string);
@@ -17,7 +18,8 @@ class Line{
 		void setStr(std::string);
 		std::string getStr() const;
 		void setWordcount(int);
-		int getWordcount() ;
+		//no const on getWordCount because of the getter's dynamic nature + need to set wordcount
+		int getWordcount();
 		void setCharcount(int);
 		int getCharcount() const;
 

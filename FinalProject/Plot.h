@@ -25,7 +25,8 @@ class Plot{
 
 		//functions
 		//1-14
-		void plot2D(double,double, int,int);
+		void plot2D(double*,double*,int);
+		void plotSinglePoint(double,double);
 
 	private:
 		int id;
