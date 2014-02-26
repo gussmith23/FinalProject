@@ -89,6 +89,7 @@ int Line::getWordcount(){
 
 		}
 
+		//set and return
 		wordcount = wordcounter;
 		return wordcount;
 
@@ -137,7 +138,7 @@ vector<string> Line::parseWords(){
 }
 /*1-9 Create a function in Line called parseChar that takes in value and returns an
 array of chars. This array should be filled with the characters from the Line.*/
-vector<char> Line::parseChar(int value){
+vector<char> Line::parseChar(){
 	//the vector to return - it has one element for each char in the string.
 	vector<char> charArray;
 	//iterate for each char in the string.

@@ -8,9 +8,11 @@ using namespace std;
 class Document{
 	public:
 		int id;
+		
 		//constructors and destructors
 		Document(std::string);
 		Document(std::string,int);
+
 		//setters and getters
 		int getLinecount() const;
 		void setLinecount(int);

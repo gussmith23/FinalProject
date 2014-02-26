@@ -192,7 +192,7 @@ vector<char> Document::parseChar(){
 	for(size_t i = 0; i < lineArray.size(); i++){
 		//the chars to add
 		//we have to call parsechar with an arg until i figure out what booth wants
-		vector<char> charsToAdd = lineArray.at(i).parseChar(1);
+		vector<char> charsToAdd = lineArray.at(i).parseChar();
 		//now we iterate for each of the chars to add, and add them
 		for(size_t j = 0; j < charsToAdd.size(); j++){
 			chars.push_back(charsToAdd.at(j));

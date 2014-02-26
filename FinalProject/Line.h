@@ -27,7 +27,7 @@ class Line{
 		//1-8
 		vector<string> parseWords();
 		//1-9
-		vector<char> parseChar(int);
+		vector<char> parseChar();
 		//1-10
 		vector<char> parseChar(string*, int);
 
