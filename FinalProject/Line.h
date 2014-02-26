@@ -1,5 +1,9 @@
 //1-2 creating class line (header file)
 #include <string>
+#include <vector>
+
+using namespace std;
+
 class Line{
 	public:
 		int id;
@@ -16,6 +20,9 @@ class Line{
 		int getWordcount() ;
 		void setCharcount(int);
 		int getCharcount() const;
+
+		//functions
+		vector<string> parseWords();
 
 	private:
 		std::string str;

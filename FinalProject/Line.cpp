@@ -62,7 +62,7 @@ int Line::getWordcount(){
 
 		/*we can treat a string like an array. we use this to our advantage.
 		we iterate through each char in the string.*/
-		for(int i=0; i<text.length(); i++){
+		for(size_t i=0; i<text.length(); i++){
 
 			//if we haven't yet found the firstChar, check if we find a char.
 			if(!foundFirstChar){
@@ -104,3 +104,34 @@ int Line::getCharcount() const{
 	return charcount;
 }
 
+//functions
+/*1-8 Create a function in Line called parseWords that returns an array of strings containing 
+words for the Line.*/
+vector<string> Line::parseWords(){
+	//the words
+	vector<string> words;
+	//the string to parse
+	string toParse = str;
+
+	//the word we'll build
+	string word = "";
+	
+	//iterate for every character in the string
+	for(size_t i = 0; i < str.length(); i++){
+		//if the char isn't a space or punctuation, add it to the word.
+		if(!((str[i] == ' ')||(str[i] == '.')||(str[i] == ',')||(str[i] == '!')||(str[i] == '?'))){
+			word = word + str[i];
+		}
+		//else if it is one of those, end the word and add it to the vector
+		else{
+			//we only want to add a word that has content. 
+			if(word.length()>0){
+				words.push_back(word);
+				word = "";
+				//so the word is reset and this character(whatever it is) is ignored
+			}
+		}
+	}
+
+	return words;
+}

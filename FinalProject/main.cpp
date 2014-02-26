@@ -36,7 +36,6 @@ int main(int argc, char* argv[]){
 	//debug workspace
 	Document doc("foo");
 	doc.loadDocument("foo.txt");
-	cout << "linecount: " << doc.getLinecount() << endl;
 
 
 	cout << "Press any key to exit...";
