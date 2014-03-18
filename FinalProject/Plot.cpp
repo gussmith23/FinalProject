@@ -1,4 +1,3 @@
-#include <Windows.h>
 #include <Plot.h>
 #include <cmath>
 #include <iostream>
@@ -203,5 +202,62 @@ void Plot::plot2D(double* x, double* y, int length){
 	//we output everything.
 	for(int i = 0; i< height; i++){
 		cout << lines[i] <<endl;
+	}
+}
+/*
+2-1
+A scaling plot function.
+As we can use drawAxis to draw the axis on-screen, all this function needs to do is number the axes and then 
+draw the points accordingly.
+*/
+void Plot::plot2DScale(double* x, double* y, int length){
+	
+	//info on CSBI class from stackoverflow and MSDN
+	//basically this object represents the console window
+	CONSOLE_SCREEN_BUFFER_INFO csbi; 
+	GetConsoleScreenBufferInfo (GetStdHandle (STD_OUTPUT_HANDLE), &csbi);
+
+	drawAxis(csbi);
+}
+//a function that draws the axis on-screen.
+void Plot::drawAxis(CONSOLE_SCREEN_BUFFER_INFO csbi){
+	string xLabel = "x-axis";
+	string yLabel = "y-axis";
+	
+	//getting the height and the width of the screen.
+	//subtracting from the height because that's just how the size works out for me right now. not an exact science...or it is, but i don't want to bother.
+	int height = abs(csbi.srWindow.Top-csbi.srWindow.Bottom) - 3;
+	int width = abs(csbi.srWindow.Left-csbi.srWindow.Right);
+
+	//so we need to plot this point.
+	/* the structure is as follows: the leftmost column is blank, reserved for the y axis label. 
+	the bottom row is also blank, reserved for the x axis label. axes borders defined by _ and |.*/
+
+	//we have one string for each line.
+	string* lines = new string[height];
+	
+	
+	//we initialize each string
+	for(int i = 0; i < height; i++){
+		lines[i] = "";
+		for(int j = 0; j < width; j++){
+			lines[i] = lines[i] + " ";
+		}
+	}
+	//we build the vertical axis.
+	for(int i = 0; i < height-1; i++){
+		lines[i][1] = '|';
+	}
+	//we build the horizontal axis.
+	for(int i = 1; i < width; i++){
+		lines[height-2][i] = '-';
+	}
+	//we label the x axis.
+	for(size_t i = 0; i < xLabel.size(); i++){
+		lines[height-1][i+2] = xLabel[i];
+	}
+	//we label the y axis.
+	for(size_t i = 0; i < yLabel.size(); i++){
+		lines[i+2][0] = yLabel[i];
 	}
 }

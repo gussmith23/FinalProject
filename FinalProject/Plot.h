@@ -2,6 +2,7 @@
 array of string ylabels, int numPoints. Make the correct setters and getters.*/
 #include <vector>
 #include <string>
+#include <Windows.h>
 
 using namespace std;
 
@@ -27,10 +28,14 @@ class Plot{
 		//1-14
 		void plot2D(double*,double*,int);
 		void plotSinglePoint(double,double);
+		//2-1 scaling plot function
+		void plot2DScale(double*,double*,int);
 
 	private:
 		int id;
 		vector<string> xlabel;
 		vector<string> ylabel;
 		int numPoints;
+		//function used to draw the axis
+		void drawAxis(CONSOLE_SCREEN_BUFFER_INFO);
 };
