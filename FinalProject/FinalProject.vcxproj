@@ -39,12 +39,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\FinalProject;$(IncludePath)</IncludePath>
+    <IncludePath>E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\FinalProject;X:\My Documents\GitHub\FinalProject\FinalProject;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
