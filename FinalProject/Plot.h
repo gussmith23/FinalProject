@@ -32,10 +32,37 @@ class Plot{
 		void plot2DScale(double*,double*,int);
 
 	private:
+		CONSOLE_SCREEN_BUFFER_INFO csbi;
+
 		int id;
 		vector<string> xlabel;
 		vector<string> ylabel;
 		int numPoints;
-		//function used to draw the axis
-		void drawAxis(CONSOLE_SCREEN_BUFFER_INFO);
+		//function used to create the axis
+		void createAxis();
+		//an array of strings which represents the screen.
+		string* screen;
+		
+		//the height and width of the screen
+		int height; int width;
+		//the height and witdth of the graph area
+		int graphHeight; int graphWidth;
+		//the max x and y represented on the graph.
+		int graphMaxX; int graphMaxY;
+		//the amount the axes are incremented by
+		int increment;
+
+		void setGraphMaxValues(double,double);
+		
+		//redraw the plot
+		void redraw();
+		//find max of a set
+		double findMax(double*,int);
+		//number the axes
+		void numberAxes(double,double);
+
+		//update csbi
+		void updateCsbi();
+		//the translation functions
+		int translateX(double); int translateY(double);
 };
