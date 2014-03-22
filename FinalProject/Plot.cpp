@@ -216,7 +216,7 @@ A scaling plot function.
 As we can use drawAxis to draw the axis on-screen, all this function needs to do is number the axes and then 
 draw the points accordingly.
 Current status:
-createAxis
+numberAxes
 */
 void Plot::plot2DScale(double* x, double* y, int length){
 	
@@ -236,7 +236,9 @@ void Plot::plot2DScale(double* x, double* y, int length){
 	//now we use the maxes to set the graph's max values
 	setGraphMaxValues(maxX,maxY);
 
+	numberAxes();
 
+	redraw();
 }
 /*
 a function that creates the axis. note: you must use redraw() to actually draw the axis.
@@ -289,9 +291,29 @@ void Plot::createAxis(){
 the function which numbers the axes.
 
 we start at increment, and increase by increment as long as we're less than or equal to the graph's max 
-val, which is a multiple of increment. for each iteration of the loop, we
+val, which is a multiple of increment. for each iteration of the loop, we put the numbers on 
+the graph using the translate functions and insertion into the screen array.
 */
 void Plot::numberAxes(){
+
+	//x axis
+	for(int i = increment; i <= graphMaxX; i = i + increment){
+
+		//we need to figure out how long the number actually is
+		char* holder = new char[10];
+		itoa(i,holder,10);
+		int digits = ((string)holder).length();
+
+		//we put the initial digit on the graph
+		int loc = translateX(i);
+		screen[height-2][loc-2] = holder[0];
+
+		//now we place the rest of the number on the plot
+		for(int j = 1; j < digits; j++){
+			screen[height-2][loc-2+j] = holder[j];
+		}
+
+	}
 
 }
 /*
@@ -321,8 +343,8 @@ void Plot::updateCsbi(){
 	GetConsoleScreenBufferInfo (GetStdHandle (STD_OUTPUT_HANDLE), &(Plot::csbi));
 }
 /*
-takes a double, and returns at what position in the string the item should be placed, given 
-current state of Plot values.
+takes a double, and returns at what position RELATIVE TO THE AXIS the item should be placed, given 
+current state of Plot values. note: this doesn't give the absolute position in the screen array.
 
 so we have the graphHeight/Width and the graphMaxX/Y. so (inputX/graphMaxX)*graphWidth
 should give the right distance along the x axis. 
