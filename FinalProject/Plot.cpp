@@ -238,6 +238,10 @@ void Plot::plot2DScale(double* x, double* y, int length){
 
 	numberAxes();
 
+	for(int i = 0;i < length;i++){
+		plotPoint(x[i],y[i]);
+	}
+	
 	redraw();
 }
 /*
@@ -297,7 +301,7 @@ the graph using the translate functions and insertion into the screen array.
 void Plot::numberAxes(){
 
 	//x axis
-	for(int i = increment; i <= graphMaxX; i = i + increment){
+	for(int i = xincrement; i < graphMaxX; i = i + xincrement){
 
 		//we need to figure out how long the number actually is
 		char* holder = new char[10];
@@ -306,13 +310,35 @@ void Plot::numberAxes(){
 
 		//we put the initial digit on the graph
 		int loc = translateX(i);
-		screen[height-2][loc-2] = holder[0];
+		screen[height-2][loc+1] = holder[0];
 
 		//now we place the rest of the number on the plot
 		for(int j = 1; j < digits; j++){
-			screen[height-2][loc-2+j] = holder[j];
+			screen[height-2][loc+1+j] = holder[j];
 		}
 
+	}
+	//y axis
+	for(int i = yincrement; i < graphMaxY; i = i + yincrement){
+		
+		
+
+		//we need to figure out how long the number actually is
+		char* holder = new char[10];
+		itoa(i,holder,10);
+		int digits = ((string)holder).length();
+
+		//we put the initial digit on the graph
+		int loc = translateY(i);
+		screen[height-1-loc][1] = holder[0];
+
+		
+		//now we place the rest of the number on the plot
+		for(int j = 1; j < digits; j++){
+			screen[height-1-loc+j][1] = holder[j];
+		}
+		
+		
 	}
 
 }
@@ -365,20 +391,26 @@ we will ceiling the double. then we'll run a while loop on it, incrementing it u
 evenly divisible by increment. the number it increments to is the graph's max val.
 */
 void Plot::setGraphMaxValues(double maxX,double maxY){
-	increment = 5;
+	xincrement = 10;
+	yincrement = 5;
 
 	//for the x
 	int x = ceil(maxX);
-	while(!(x%increment==0)){
+	while(!((x)%xincrement==0)){
 		x++;
 	}
-	graphMaxX = x;
+	graphMaxX = x+xincrement;
 
 	//for the y
 	int y = ceil(maxY);
-	while(!(y%increment==0)){
+	while(!((y)%yincrement==0)){
 		y++;
 	}
-	graphMaxY = x;
+	graphMaxY = y+yincrement;
 	
+}
+/*
+*/
+void Plot::plotPoint(double x, double y){
+	screen[height - translateY(y) - 1 - 1][translateX(x)+1] = '*';
 }

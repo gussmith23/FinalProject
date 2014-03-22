@@ -54,7 +54,7 @@ class Plot{
 		//the max x and y represented on the graph.
 		int graphMaxX; int graphMaxY;
 		//the amount the axes are incremented by
-		int increment;
+		int xincrement; int yincrement;
 
 		void setGraphMaxValues(double,double);
 		
@@ -64,6 +64,8 @@ class Plot{
 		double findMax(double*,int);
 		//number the axes
 		void numberAxes();
+		//plot a single point on the graph
+		void plotPoint(double,double);
 
 		//update csbi
 		void updateCsbi();
