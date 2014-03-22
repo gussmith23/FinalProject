@@ -71,4 +71,10 @@ class Plot{
 		void updateCsbi();
 		//the translation functions
 		int translateX(double); int translateY(double);
+
+		//2-2 ruling functions
+		void markhoriz(int,int);
+		void rulehoriz(int,int,int);
+		void markvert(int,int);
+		void rulevert(int,int,int);
 };

@@ -242,6 +242,9 @@ void Plot::plot2DScale(double* x, double* y, int length){
 		plotPoint(x[i],y[i]);
 	}
 	
+	rulehoriz(2,width-1,3);
+	rulevert(0,height-3,3);
+
 	redraw();
 }
 /*
@@ -413,4 +416,36 @@ void Plot::setGraphMaxValues(double maxX,double maxY){
 */
 void Plot::plotPoint(double x, double y){
 	screen[height - translateY(y) - 1 - 1][translateX(x)+1] = '*';
+}
+/*
+*/
+void Plot::rulehoriz(int l, int r, int h){
+	int m = (l+r)/2;
+	if(h>0){
+		rulehoriz(l,m,h-1);
+		markhoriz(m,h);
+		rulehoriz(m,r,h-1);
+	}
+}
+void Plot::markhoriz(int loc, int h){
+	
+	for(int i = 0; i<h; i++){
+		screen[height-1-1-1-i][loc+1] = '|';
+	}
+
+}
+void Plot::rulevert(int l, int r, int h){
+	int m = (l+r)/2;
+	if(h>0){
+		rulevert(l,m,h-1);
+		markvert(m,h);
+		rulevert(m,r,h-1);
+	}
+}
+void Plot::markvert(int loc, int h){
+	
+	for(int i = 0; i<h; i++){
+		screen[height-2-loc][i+2] = '-';
+	}
+
 }
