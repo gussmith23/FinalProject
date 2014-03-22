@@ -9,6 +9,8 @@ using namespace std;
 class Plot{
 	public:
 
+		Plot();
+
 		//getters and setters
 		int getId() const;
 		void setId(int);
@@ -42,6 +44,8 @@ class Plot{
 		void createAxis();
 		//an array of strings which represents the screen.
 		string* screen;
+		//this value is changed depending on how much space needs to be reserved below the graph
+		int heightBuffer;
 		
 		//the height and width of the screen
 		int height; int width;
@@ -59,7 +63,7 @@ class Plot{
 		//find max of a set
 		double findMax(double*,int);
 		//number the axes
-		void numberAxes(double,double);
+		void numberAxes();
 
 		//update csbi
 		void updateCsbi();

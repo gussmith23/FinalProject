@@ -4,6 +4,12 @@
 
 using namespace std;
 
+Plot::Plot(){
+	//setting heightBuffer
+	heightBuffer = 3;
+
+	updateCsbi();
+}
 void Plot::plotSinglePoint(double x, double y){
 
 	string xLabel = "x-axis";
@@ -210,7 +216,7 @@ A scaling plot function.
 As we can use drawAxis to draw the axis on-screen, all this function needs to do is number the axes and then 
 draw the points accordingly.
 Current status:
-setgraphmaxvalues
+createAxis
 */
 void Plot::plot2DScale(double* x, double* y, int length){
 	
@@ -238,10 +244,11 @@ a function that creates the axis. note: you must use redraw() to actually draw t
 void Plot::createAxis(){
 	string xLabel = "x-axis";
 	string yLabel = "y-axis";
+
 	
 	//getting the height and the width of the screen.
 	//subtracting from the height because that's just how the size works out for me right now. not an exact science...or it is, but i don't want to bother.
-	height = abs(csbi.srWindow.Top-csbi.srWindow.Bottom) - 3;
+	height = abs(csbi.srWindow.Top-csbi.srWindow.Bottom) - heightBuffer;
 	width = abs(csbi.srWindow.Left-csbi.srWindow.Right);
 	//setting the working area of the graph.
 	graphHeight = height-1;
@@ -279,9 +286,12 @@ void Plot::createAxis(){
 	}
 }
 /*
-the function which numbers the axis.
+the function which numbers the axes.
+
+we start at increment, and increase by increment as long as we're less than or equal to the graph's max 
+val, which is a multiple of increment. for each iteration of the loop, we
 */
-void Plot::numberAxes(double maxX,double maxY){
+void Plot::numberAxes(){
 
 }
 /*
@@ -311,10 +321,18 @@ void Plot::updateCsbi(){
 	GetConsoleScreenBufferInfo (GetStdHandle (STD_OUTPUT_HANDLE), &(Plot::csbi));
 }
 /*
-takes a double, and returns at what position in the string the item should be placed, given current state of Plot values
+takes a double, and returns at what position in the string the item should be placed, given 
+current state of Plot values.
+
+so we have the graphHeight/Width and the graphMaxX/Y. so (inputX/graphMaxX)*graphWidth
+should give the right distance along the x axis. 
+
 */
 int Plot::translateX(double x){
-
+	return floor((x/graphMaxX)*graphWidth);
+}
+int Plot::translateY(double y){
+	return floor((y/graphMaxY)*graphHeight);
 }
 /*
 this function takes the max values in the set, and uses that information in combination
@@ -327,6 +345,18 @@ evenly divisible by increment. the number it increments to is the graph's max va
 void Plot::setGraphMaxValues(double maxX,double maxY){
 	increment = 5;
 
-	
+	//for the x
+	int x = ceil(maxX);
+	while(!(x%increment==0)){
+		x++;
+	}
+	graphMaxX = x;
 
+	//for the y
+	int y = ceil(maxY);
+	while(!(y%increment==0)){
+		y++;
+	}
+	graphMaxY = x;
+	
 }
