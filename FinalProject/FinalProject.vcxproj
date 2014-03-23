@@ -66,13 +66,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Document.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Line.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Plot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Document.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Plot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

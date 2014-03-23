@@ -418,8 +418,11 @@ void Plot::plotPoint(double x, double y){
 	screen[height - translateY(y) - 1 - 1][translateX(x)+1] = '*';
 }
 /*
+the following functions build the ruler on the screen.
 */
 void Plot::rulehoriz(int l, int r, int h){
+	//this is simply a recursion which divides the screen into sections, indicating each time
+	//with marks
 	int m = (l+r)/2;
 	if(h>0){
 		rulehoriz(l,m,h-1);
