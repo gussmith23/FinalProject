@@ -1,3 +1,7 @@
+/*
+Current status: working on plot2dscale
+*/
+
 #include <cstdio>
 #include <stdlib.h>
 #include <iostream>
@@ -154,10 +158,11 @@ int main(int argc, char* argv[]){
 							cin >> y;
 							cout << endl;
 							*/
-							double x[3] = {36,16,60};
+							double x[3] = {36,16,59};
 							double y[3] = {17,5,8};
 
-							p.plot2D(x,y,3);
+							//p.plot2D(x,y,3);
+							p.plot2DScale(x,y,3);
 						}
 						break;
 					case'b':
