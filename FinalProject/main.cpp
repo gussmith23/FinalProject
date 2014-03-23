@@ -52,6 +52,7 @@ int main(int argc, char* argv[]){
 					else{
 						cout << "Document load failed.\n";
 					}
+
 				}
 			break;
 

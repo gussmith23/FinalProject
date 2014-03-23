@@ -167,3 +167,14 @@ vector<char> Line::parseChar(string* stringArray, int length){
 
 	return charVector;
 }
+/*
+*/
+char Line::getPunctuation(){
+	//we search for the punctuation from the back of the string to the front.
+	for(int i = str.length() - 1; i >= 0; i--){
+		if((str[i] == '.')||(str[i] == '!')||(str[i] == '?')) return str[i];
+	}
+
+	//return period by default
+	return '.';
+}

@@ -202,3 +202,22 @@ vector<char> Document::parseChar(){
 
 	return chars;
 }
+/*
+2-3 The function should search through all the Lines. Each line will be a new node that 
+stores the word count of that line and the symbol that ended the sentence (., ?, !, etc).
+
+we use a void type here as the template defines the class of the key stored, and
+in this case 
+
+*/
+LineLinkedList Document::lineLengths(){
+
+	LineLinkedList ll = LineLinkedList();
+
+	for(int i = 0; i < lineArray.size(); i++){
+		ll.add(lineArray.at(i).getWordcount(),lineArray.at(i).getPunctuation());
+	}
+
+	return ll;
+
+}

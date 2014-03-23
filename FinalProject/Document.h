@@ -2,6 +2,7 @@
 #include <Line.h>
 #include <string>
 #include <vector>
+#include <LineLinkedList.h>
 
 using namespace std;
 
@@ -33,6 +34,8 @@ class Document{
 		vector<string> parseWords();
 		//1-12 parseChar
 		vector<char> parseChar();
+		//2-3 linelengths
+		LineLinkedList lineLengths();
 
 	private:
 		int linecount;

@@ -31,6 +31,9 @@ class Line{
 		//1-10
 		vector<char> parseChar(string*, int);
 
+		//a function to find the punctuation
+		char getPunctuation();
+
 	private:
 		std::string str;
 		int wordcount;
