@@ -27,9 +27,6 @@
     <ClCompile Include="Plot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LineLinkedList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Line.h">
@@ -41,7 +38,10 @@
     <ClInclude Include="Plot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LineLinkedList.h">
+    <ClInclude Include="Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LineNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

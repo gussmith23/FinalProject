@@ -1,11 +1,6 @@
 //1-3 Document class (cpp file)
 #include <Document.h>
-#include <iostream>
-#include <fstream>
-
 using namespace std;
-
-
 //constructors and deconstructors
 //string name, random id
 Document::Document(string nameval){
@@ -206,18 +201,25 @@ vector<char> Document::parseChar(){
 2-3 The function should search through all the Lines. Each line will be a new node that 
 stores the word count of that line and the symbol that ended the sentence (., ?, !, etc).
 
-we use a void type here as the template defines the class of the key stored, and
-in this case 
-
+this function has no return - it simply creates the linked list, setting 
+Document::lineLengthsLinkedList equal to the head.
 */
-LineLinkedList Document::lineLengths(){
-
-	LineLinkedList ll = LineLinkedList();
-
-	for(int i = 0; i < lineArray.size(); i++){
-		ll.add(lineArray.at(i).getWordcount(),lineArray.at(i).getPunctuation());
+void Document::lineLengths(){
+	//for the first line, we create the inital node (which is the head of the linked list
+	LineNode<int>* head = new LineNode<int>(lineArray.at(0).getWordcount(),lineArray.at(0).getPunctuation());	
+	//we use this in the scope of the function to keep track of the tail for easy adding
+	LineNode<int>* tail = head;
+	//as we've done the first one already, start with the second line
+	for(int i = 1; i < lineArray.size(); i++){
+		//the new node to be added
+		LineNode<int>* newNode = new LineNode<int>(lineArray.at(i).getWordcount(),lineArray.at(i).getPunctuation());
+		//set the old tail to point to this one
+		tail->LineNode::setNext(newNode);
+		//set the newNode as the new tail
+		tail = newNode;
 	}
-
-	return ll;
-
+	lineLengthsLinkedList = head;
+}
+LineNode<int>* Document::getLineLengthsLinkedList() const{
+	return lineLengthsLinkedList;
 }

@@ -2,7 +2,9 @@
 #include <Line.h>
 #include <string>
 #include <vector>
-#include <LineLinkedList.h>
+#include <iostream>
+#include <fstream>
+#include <LineNode.h>
 
 using namespace std;
 
@@ -35,7 +37,8 @@ class Document{
 		//1-12 parseChar
 		vector<char> parseChar();
 		//2-3 linelengths
-		LineLinkedList lineLengths();
+		void lineLengths();
+		LineNode<int>* getLineLengthsLinkedList() const;
 
 	private:
 		int linecount;
@@ -43,5 +46,8 @@ class Document{
 		//array of lines on the heap using the vector class
 		vector<Line> lineArray;
 		std::string name;
+		//null terminated linked list with wordcounts and final chars
+		LineNode<int>* lineLengthsLinkedList;
+
 
 };

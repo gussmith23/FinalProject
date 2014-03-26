@@ -32,6 +32,8 @@ class Plot{
 		void plotSinglePoint(double,double);
 		//2-1 scaling plot function
 		void plot2DScale(double*,double*,int);
+		//2-4 histogram
+		void histogram();
 
 	private:
 		CONSOLE_SCREEN_BUFFER_INFO csbi;
