@@ -32,8 +32,8 @@ class Plot{
 		void plotSinglePoint(double,double);
 		//2-1 scaling plot function
 		void plot2DScale(double*,double*,int);
-		//2-4 histogram
-		void histogram();
+		//2-4 histogram - takes array of frequencies and length of array
+		void histogram(double*,int);
 
 	private:
 		CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -68,6 +68,8 @@ class Plot{
 		void numberAxes();
 		//plot a single point on the graph
 		void plotPoint(double,double);
+		//separating the numberAxes()  function
+		void numberXAxis(); void numberYAxis();
 
 		//update csbi
 		void updateCsbi();

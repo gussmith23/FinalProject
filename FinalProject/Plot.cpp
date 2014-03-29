@@ -302,7 +302,11 @@ val, which is a multiple of increment. for each iteration of the loop, we put th
 the graph using the translate functions and insertion into the screen array.
 */
 void Plot::numberAxes(){
-
+	
+	numberXAxis();
+	numberYAxis();
+	
+	/*
 	//x axis
 	for(int i = xincrement; i < graphMaxX; i = i + xincrement){
 
@@ -343,6 +347,7 @@ void Plot::numberAxes(){
 		
 		
 	}
+	*/
 
 }
 /*
@@ -451,4 +456,66 @@ void Plot::markvert(int loc, int h){
 		screen[height-2-loc][i+2] = '-';
 	}
 
+}
+/*
+2-4 histogram:
+Create a function in Plot class called histogram. This function should create a histogram
+based on a given array of frequencies.
+the way this function works is as follows:
+1. axes created.
+2. max frequency found -> y axis numbered.
+3. x-axis labeled.
+4. vertical bars drawn
+*/
+void Plot::histogram(double* frequencies,int length){
+
+
+
+}
+/*
+in the next two functions, we're simply separating the numberAxes function
+*/
+void Plot::numberXAxis(){
+	//x axis
+	for(int i = xincrement; i < graphMaxX; i = i + xincrement){
+
+		//we need to figure out how long the number actually is
+		char* holder = new char[10];
+		itoa(i,holder,10);
+		int digits = ((string)holder).length();
+
+		//we put the initial digit on the graph
+		int loc = translateX(i);
+		screen[height-2][loc+1] = holder[0];
+
+		//now we place the rest of the number on the plot
+		for(int j = 1; j < digits; j++){
+			screen[height-2][loc+1+j] = holder[j];
+		}
+
+	}
+}
+void Plot::numberYAxis(){
+	//y axis
+	for(int i = yincrement; i < graphMaxY; i = i + yincrement){
+		
+		
+
+		//we need to figure out how long the number actually is
+		char* holder = new char[10];
+		itoa(i,holder,10);
+		int digits = ((string)holder).length();
+
+		//we put the initial digit on the graph
+		int loc = translateY(i);
+		screen[height-1-loc][1] = holder[0];
+
+		
+		//now we place the rest of the number on the plot
+		for(int j = 1; j < digits; j++){
+			screen[height-1-loc+j][1] = holder[j];
+		}
+		
+		
+	}
 }
