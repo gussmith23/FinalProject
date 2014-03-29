@@ -8,14 +8,20 @@ Document::Document(string nameval){
 	//we use a six-digit random number here
 	id = rand() % (999999 - 100000 + 1) + 100000;
 	wordcount = NULL;
+	/*initialize the stack of words, and fill it right off the bat so that we don't have
+	to worry about it being un-initialized*/
 	words = new Stack<string>();
+	parseWords();
 }
 //string name, int id
 Document::Document(string nameval, int idval){
 	name = nameval;
 	id = idval;
 	wordcount = NULL;
+	/*initialize the stack of words, and fill it right off the bat so that we don't have
+	to worry about it being un-initialized*/
 	words = new Stack<string>();
+	parseWords();
 }
 
 //setters and geters
@@ -171,6 +177,8 @@ vector<string> Document::parseWords(){
 		for(size_t j = 0; j < wordsToAdd.size(); j++){
 			//add the word
 			words.push_back(wordsToAdd.at(j));
+			//we also add the words to our main stack of all words
+			Document::words->push(wordsToAdd.at(j));
 		}
 	}
 

@@ -40,6 +40,8 @@ class Document{
 		//2-3 linelengths
 		void lineLengths();
 		LineNode<int>* getLineLengthsLinkedList() const;
+		//2-5 reversecompare
+		void reverseCompare(Document);
 
 	private:
 		int linecount;

@@ -33,7 +33,7 @@ new head.*/
 template<class T>
 Node<T>* Stack<T>::push(T value){
 	//create node with given value
-	Node<T>* n = new Node(value);
+	Node<T>* n = new Node<T>(value);
 
 	//if the stack is empty
 	if(head == 0){
@@ -42,7 +42,7 @@ Node<T>* Stack<T>::push(T value){
 	//else we just need to make a minor adjustment
 	else{
 		//set node's next node to current head
-		n->next = head;
+		n->setNext(head);
 		//set stack head to new node
 		head = n;
 	}
