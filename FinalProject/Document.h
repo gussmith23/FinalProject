@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <LineNode.h>
+#include <Stack.h>
 
 using namespace std;
 
@@ -48,6 +49,8 @@ class Document{
 		std::string name;
 		//null terminated linked list with wordcounts and final chars
 		LineNode<int>* lineLengthsLinkedList;
+		//a stack of all words in the doc
+		Stack<string>* words;
 
 
 };

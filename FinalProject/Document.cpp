@@ -8,12 +8,14 @@ Document::Document(string nameval){
 	//we use a six-digit random number here
 	id = rand() % (999999 - 100000 + 1) + 100000;
 	wordcount = NULL;
+	words = new Stack<string>();
 }
 //string name, int id
 Document::Document(string nameval, int idval){
 	name = nameval;
 	id = idval;
 	wordcount = NULL;
+	words = new Stack<string>();
 }
 
 //setters and geters
