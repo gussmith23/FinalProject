@@ -16,11 +16,12 @@ class Node{
 template<class T>
 Node<T>::Node(T key){
 	Node<T>::key = key;
-	next = 0;
+	next = NULL;
 }
 template<class T>
 Node<T>::Node(){
-	next = 0;
+	next = NULL;
+	key = T();
 }
 template<class T>
 Node<T>* Node<T>::getNext() const{

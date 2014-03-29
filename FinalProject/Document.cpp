@@ -74,6 +74,9 @@ string Document::getName() const{
 void Document::setName(string nameval){
 	name = nameval;
 }
+Stack<string>* Document::getWords() const { 
+	return words; 
+}
 
 //functions
 /*1-4 loaddocument function: 4. Add a function call loadDocument that takes the name of the file. 
@@ -232,4 +235,71 @@ void Document::lineLengths(){
 }
 LineNode<int>* Document::getLineLengthsLinkedList() const{
 	return lineLengthsLinkedList;
+}
+/*
+2-5 reverseCompare
+Create a function called reverseCompare in Document that takes in a Document as 
+input. The function needs to create a stack of words in the calling document. Next 
+examine the words of the passed Document form the end to the beginning with those 
+words on the stack. If the words are different, cout different, else cout same.
+*/
+void Document::reverseCompare(Document d){
+
+	parseWords();
+	d.parseWords();
+
+	//the stacks for the master and external
+	Stack<string>* master = Stack<string>::copyStack(Document::words);
+	Stack<string>* external = Stack<string>::copyStack(d.getWords());
+
+	//indicating how the comparisons will be notated.
+	cout << "MASTER vs. EXTERNAL" << endl;
+
+	//our escape boolean
+	bool running = false;
+	/*
+	the master and external strings to compare.
+	because of how the Node and Stack classes are defined, if the end of the list
+	has been reached, one of these will be empty.
+	*/
+	string masterStr = master->pop();
+	string externalStr = external->pop();
+	//if neither is empty, then we'll actually execute our loop.
+	if(!((masterStr.empty())&&(externalStr.empty()))) running = true;
+	else{
+		cout << "Error: One of the selected documents is empty!" << endl;
+		return;
+	}
+	while(running){
+		//comparison goes at the top
+		string word;
+		if(!masterStr.compare(externalStr)) word = "SAME";
+		else word = "DIFFERENT";
+		cout<< masterStr << " vs. " <<externalStr << ": " << word << endl;
+
+		//getting new strings goes at the bottom - we decide if we run through one more time		
+		masterStr = master->pop();
+		externalStr = external->pop();
+
+		if((external->getHead() == 0)||(master->getHead() == 0)) running = false;
+		/*
+		//if both are empty...
+		if((masterStr.empty())&&(externalStr.empty())){
+			cout << "Reached the end of both strings!" << endl; 
+			running = false;
+		}
+		//else if either of them is empty...
+		else if(masterStr.empty()){
+			cout << "Reached the end of MASTER document!" << endl;
+			running = false;
+		}
+		else if(externalStr.empty()){
+			cout << "Reached the end of EXTERNAL document!" << endl;
+			running = false;
+		}
+		*/
+	}
+
+
+	cout << "End of comparison." << endl;
 }

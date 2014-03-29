@@ -1,6 +1,5 @@
 /*
-Current status: skipping 4
-working on 5
+Current status: now on 6
 */
 
 #include <cstdio>

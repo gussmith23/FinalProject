@@ -27,6 +27,7 @@ class Document{
 		void addToLineArray(Line);
 		std::string getName() const;
 		void setName(std::string);
+		Stack<string>* getWords() const;
 
 		//functions
 		//1-4 loadDocument functions

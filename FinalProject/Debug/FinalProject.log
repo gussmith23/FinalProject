@@ -1,9 +1,9 @@
-﻿Build started 3/29/2014 5:33:49 PM.
+﻿Build started 3/29/2014 6:52:35 PM.
      1>Project "X:\My Documents\GitHub\FinalProject\FinalProject\FinalProject.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Document.cpp main.cpp
          Document.cpp
-     1>x:\my documents\github\finalproject\finalproject\document.cpp(223): warning C4018: '<' : signed/unsigned mismatch
+     1>x:\my documents\github\finalproject\finalproject\document.cpp(226): warning C4018: '<' : signed/unsigned mismatch
          main.cpp
          Generating Code...
        Link:
@@ -16,4 +16,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:11.09
+Time Elapsed 00:01:28.06
