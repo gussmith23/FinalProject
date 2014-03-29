@@ -76,6 +76,7 @@
     <ClInclude Include="LineNode.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Plot.h" />
+    <ClInclude Include="Stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
