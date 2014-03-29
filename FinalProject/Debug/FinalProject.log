@@ -1,12 +1,7 @@
-﻿Build started 3/29/2014 4:09:45 PM.
+﻿Build started 3/29/2014 4:23:46 PM.
      1>Project "X:\My Documents\GitHub\FinalProject\FinalProject\FinalProject.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Document.cpp Line.cpp Plot.cpp main.cpp
-         Document.cpp
-     1>x:\my documents\github\finalproject\finalproject\document.cpp(213): warning C4018: '<' : signed/unsigned mismatch
-         Line.cpp
-     1>x:\my documents\github\finalproject\finalproject\line.cpp(145): warning C4018: '<' : signed/unsigned mismatch
-     1>x:\my documents\github\finalproject\finalproject\line.cpp(161): warning C4018: '<' : signed/unsigned mismatch
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Plot.cpp main.cpp
          Plot.cpp
      1>x:\my documents\github\finalproject\finalproject\plot.cpp(70): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
@@ -32,9 +27,9 @@
      1>x:\my documents\github\finalproject\finalproject\plot.cpp(391): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
      1>x:\my documents\github\finalproject\finalproject\plot.cpp(406): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
      1>x:\my documents\github\finalproject\finalproject\plot.cpp(413): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>x:\my documents\github\finalproject\finalproject\plot.cpp(484): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+     1>x:\my documents\github\finalproject\finalproject\plot.cpp(494): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>x:\my documents\github\finalproject\finalproject\plot.cpp(506): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+     1>x:\my documents\github\finalproject\finalproject\plot.cpp(516): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
          main.cpp
          Generating Code...
@@ -48,4 +43,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:08.53
+Time Elapsed 00:00:07.46

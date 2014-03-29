@@ -234,7 +234,7 @@ void Plot::plot2DScale(double* x, double* y, int length){
 	maxY = findMax(y,length);
 
 	//now we use the maxes to set the graph's max values
-	setGraphMaxValues(maxX,maxY);
+	setGraphMaxValues(maxX,maxY,5,10);
 
 	numberAxes();
 
@@ -398,9 +398,9 @@ basically what will happen is this:
 we will ceiling the double. then we'll run a while loop on it, incrementing it until it is
 evenly divisible by increment. the number it increments to is the graph's max val.
 */
-void Plot::setGraphMaxValues(double maxX,double maxY){
-	xincrement = 10;
-	yincrement = 5;
+void Plot::setGraphMaxValues(double maxX,double maxY,int xincrement,int yincrement){
+	Plot::xincrement = xincrement;
+	Plot::yincrement = yincrement;
 
 	//for the x
 	int x = ceil(maxX);
@@ -463,13 +463,23 @@ Create a function in Plot class called histogram. This function should create a 
 based on a given array of frequencies.
 the way this function works is as follows:
 1. axes created.
-2. max frequency found -> y axis numbered.
-3. x-axis labeled.
-4. vertical bars drawn
+2. max frequency found -> set graph max values
+3. y axis numbered.
+4. x-axis labeled.
+5. vertical bars drawn
 */
 void Plot::histogram(double* frequencies,int length){
-
-
+	
+	//always important to do.
+	updateCsbi();
+	//create the basic axis.
+	createAxis();
+	/*
+	set the max value for y. the choice for the X axis's max value is arbitrary, as it
+	won't actually hold any values.
+	*/
+	//setGraphMaxValues(length,(frequencies,length),1,);
+	//set
 
 }
 /*

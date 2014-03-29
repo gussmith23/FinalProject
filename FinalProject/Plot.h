@@ -57,8 +57,8 @@ class Plot{
 		int graphMaxX; int graphMaxY;
 		//the amount the axes are incremented by
 		int xincrement; int yincrement;
-
-		void setGraphMaxValues(double,double);
+		//takes the greatest X and Y values present, and the desired values to increment the x and y axes by.
+		void setGraphMaxValues(double,double,int,int);
 		
 		//redraw the plot
 		void redraw();
