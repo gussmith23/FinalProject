@@ -54,9 +54,9 @@ class Plot{
 		//the height and witdth of the graph area
 		int graphHeight; int graphWidth;
 		//the max x and y represented on the graph.
-		int graphMaxX; int graphMaxY;
+		double graphMaxX; double graphMaxY;
 		//the amount the axes are incremented by
-		int xincrement; int yincrement;
+		double xincrement; double yincrement;
 		//takes the greatest X and Y values present, and the desired values to increment the x and y axes by.
 		void setGraphMaxValues(double,double,int,int);
 		

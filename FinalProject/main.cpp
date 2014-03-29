@@ -145,7 +145,7 @@ int main(int argc, char* argv[]){
 				bool analyzeLoop = true;
 
 				do{
-					cout << "a. Plot\nb. Go back\n";
+					cout << "a. Plot\nb. Histogram\nc.Go back\n";
 					char analyzeInput = NULL;
 					cin >> analyzeInput;
 					switch(analyzeInput){
@@ -168,6 +168,13 @@ int main(int argc, char* argv[]){
 						}
 						break;
 					case'b':
+						{
+							Plot p = Plot();
+							double frequencies[3] = {.2,.9,.7};
+							p.histogram(frequencies,3);
+						}
+						break;
+					case'c':
 						{
 							analyzeLoop = false;
 						}

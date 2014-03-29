@@ -475,12 +475,34 @@ void Plot::histogram(double* frequencies,int length){
 	//create the basic axis.
 	createAxis();
 	/*
-	set the max value for y. the choice for the X axis's max value is arbitrary, as it
-	won't actually hold any values.
+	set the max value for y. we choose 1 for the increment on the x axis so that each bar will
+	be evenly spaced, and there will be no extra space for other bars.
 	*/
-	//setGraphMaxValues(length,(frequencies,length),1,);
-	//set
-
+	setGraphMaxValues(length,findMax(frequencies,length),1,1);
+	//number the axes
+	numberAxes();
+	/*
+	now we plot the bars. we do this by simply plotting the original point, and then plotting
+	at that same x position while decreasing the y value by 1. we do this over and over until 
+	we hit the x axis; at that point we'll have a bar.
+	note: we might need to decrement by smaller than 1 each time to get a solid bar. probably
+	not though.
+	*/
+	//for each frequency
+	for(int i = 0; i < length; i++){
+		//the frequency we're dealing with
+		double freq = frequencies[i];
+		/*
+		we plot over and over
+		we use j>.5 to make sure that the bar doesn't plot over the number on the x axis.
+		*/
+		for(double j = freq; j >= .05; j = j-.1){
+			//we plot at x=the correct column for the frequency and y=freq-num iterations
+			plotPoint(i+1,j);
+		}
+	}
+	//finally, draw 
+	redraw();
 }
 /*
 in the next two functions, we're simply separating the numberAxes function
