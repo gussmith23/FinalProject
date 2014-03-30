@@ -303,3 +303,35 @@ void Document::reverseCompare(Document d){
 
 	cout << "End of comparison." << endl;
 }
+/*
+2-7 hashWords - hashes words into a hashtable.
+*/
+void Document::hashWords(){
+	
+	hashLength = 2;
+	hashTable = new Node<string>*[hashLength]();
+	//we initialize the hash table to the appropriate length
+	for(int i = 0; i < hashLength; i++){
+		hashTable[i] = new Node<string>();
+	}
+	//the stack of words
+	Stack<string>* s = Stack<string>::copyStack(words);
+	//cycle for every word
+	while((s->getHead())!=0){
+		string word = s->pop();
+		int h = 0, a = 127;
+		//h will be between 0 and hashLength-1
+		for(int i = 0; i<word.length(); i++) h = (a*h + word[i]) % hashLength;
+		//put the word in the table
+		Node<string>* head = hashTable[h];
+		//we keep iterating until we find the last node
+		while(head->getNext() != 0){
+			head = head->getNext();
+		}
+		//we create the new node on the end with a value of the initial string
+		head->setNext(new Node<string>(word));	
+	}
+}
+Node<string>** Document::getHashTable() const {
+	return hashTable;
+}

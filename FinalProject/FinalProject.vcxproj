@@ -74,6 +74,7 @@
     <ClInclude Include="Document.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineNode.h" />
+    <ClInclude Include="Metrics.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Plot.h" />
     <ClInclude Include="Stack.h" />
