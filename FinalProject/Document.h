@@ -29,6 +29,7 @@ class Document{
 		void setName(std::string);
 		Stack<string>* getWords() const;
 		Node<string>** getHashTable() const;
+		void setHashTable(Node<string>**);
 
 		//functions
 		//1-4 loadDocument functions

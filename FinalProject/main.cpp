@@ -52,14 +52,10 @@ int main(int argc, char* argv[]){
 
 						//YOU CAN PUT DEBUG STUFF HERE
 						
-						/*string test[6] = {"gus","grant","kyle","sam","chad","jake"};
-						int test2[21] = {9,7,3,9,2,1,34,2,35,623,5,235,235,8,2,13,43,52,3,5643,52};
-						Metrics* m = new Metrics();
-						m->selectionSort(test2,0,20);
-						for(int i = 0; i < 21; i++){
-							cout<< " "<<test2[i];
-						}*/
-						
+						d.hashWords();
+						Node<string>** table = d.getHashTable();
+						cout << "test" << table[1]->getNext()->getNext()->getCount();
+
 					}
 					else{
 						cout << "Document load failed.\n";

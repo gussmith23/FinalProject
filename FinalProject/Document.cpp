@@ -308,30 +308,47 @@ void Document::reverseCompare(Document d){
 */
 void Document::hashWords(){
 	
+	//the amount of spaces in the outer array
 	hashLength = 2;
+
 	hashTable = new Node<string>*[hashLength]();
 	//we initialize the hash table to the appropriate length
 	for(int i = 0; i < hashLength; i++){
 		hashTable[i] = new Node<string>();
 	}
 	//the stack of words
-	Stack<string>* s = Stack<string>::copyStack(words);
+	vector<string> s = parseWords();
 	//cycle for every word
-	while((s->getHead())!=0){
-		string word = s->pop();
+	for(int i = 0; i < s.size(); i++){
+		string word = s.at(i);
 		int h = 0, a = 127;
 		//h will be between 0 and hashLength-1
 		for(int i = 0; i<word.length(); i++) h = (a*h + word[i]) % hashLength;
-		//put the word in the table
+		
+		/*
+		put the word in the table.
+		we either create a new node if one doesn't exist, or we increment count
+		on the already existing node.
+		*/
+		//first find the head of the chain
 		Node<string>* head = hashTable[h];
-		//we keep iterating until we find the last node
-		while(head->getNext() != 0){
-			head = head->getNext();
+		//we keep iterating until we find the last node OR until we find a node whose key is the same
+		while((head->getNext() != 0)&&(head->getKey().compare(word)!=0)) head = head->getNext();
+
+		//if we found a node whose key is the same, we increment the counter
+		if(head->getKey().compare(word)==0) head->setCount(head->getCount() + 1);
+		//otherwise, create a new node on the end
+		else{
+			head->setNext(new Node<string>(word));	
 		}
-		//we create the new node on the end with a value of the initial string
-		head->setNext(new Node<string>(word));	
+		
 	}
+	
+	setHashTable(hashTable);
 }
 Node<string>** Document::getHashTable() const {
 	return hashTable;
+}
+void Document::setHashTable(Node<string>** val){
+	Document::hashTable = val;
 }
