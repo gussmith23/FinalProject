@@ -7,6 +7,7 @@ Current status: now on 6
 #include <iostream>
 #include <Document.h>
 #include <Plot.h>
+#include <Metrics.h>
 
 using namespace std;
 
@@ -48,6 +49,17 @@ int main(int argc, char* argv[]){
 					if(documentToLoad.loadDocument(loadDocumentInput)){
 						//if it passes...
 						d = documentToLoad;
+
+						//YOU CAN PUT DEBUG STUFF HERE
+						
+						/*string test[6] = {"gus","grant","kyle","sam","chad","jake"};
+						int test2[21] = {9,7,3,9,2,1,34,2,35,623,5,235,235,8,2,13,43,52,3,5643,52};
+						Metrics* m = new Metrics();
+						m->selectionSort(test2,0,20);
+						for(int i = 0; i < 21; i++){
+							cout<< " "<<test2[i];
+						}*/
+						
 					}
 					else{
 						cout << "Document load failed.\n";
