@@ -1,7 +1,7 @@
-﻿Build started 4/29/2014 8:31:03 AM.
+﻿Build started 4/29/2014 9:01:38 AM.
      1>Project "X:\My Documents\GitHub\FinalProject\FinalProject\FinalProject.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Document.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Document.cpp main.cpp
          Document.cpp
      1>x:\my documents\github\finalproject\finalproject\document.cpp(242): warning C4018: '<' : signed/unsigned mismatch
      1>x:\my documents\github\finalproject\finalproject\document.cpp(338): warning C4018: '<' : signed/unsigned mismatch
@@ -44,6 +44,8 @@
                      T=char
                  ]
      1>x:\my documents\github\finalproject\finalproject\metrics.h(29): warning C4018: '<' : signed/unsigned mismatch
+         main.cpp
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"X:\My Documents\GitHub\FinalProject\Debug\FinalProject.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"X:\My Documents\GitHub\FinalProject\Debug\FinalProject.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"X:\My Documents\GitHub\FinalProject\Debug\FinalProject.lib" /MACHINE:X86 Debug\Document.obj
          Debug\main.obj
@@ -54,4 +56,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:11.08
+Time Elapsed 00:00:13.46

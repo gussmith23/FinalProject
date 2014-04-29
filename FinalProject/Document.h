@@ -18,12 +18,9 @@ class Document{
 		Document(std::string,int);
 
 		//setters and getters
-		int getLinecount() const;
-		void setLinecount(int);
-		int getWordcount() ;
-		void setWordcount(int);
-		vector<Line> getLineArray() const;
-		void setLineArray(vector<Line>);
+		int getLinecount() const;void setLinecount(int);
+		int getWordcount(); void setWordcount(int);
+		vector<Line> getLineArray() const; void setLineArray(vector<Line>);
 		void addToLineArray(Line);
 		std::string getName() const;
 		void setName(std::string);
