@@ -69,7 +69,7 @@ public:
 
 
 	/*
-	3-1 templated sorts for int, char, and string 
+	3-1 templated sorts for int, char, and string. I have sorts for both arrays and linked lists.
 	*/
 
 	/* SORTS FOR ARRAYS */
@@ -100,6 +100,9 @@ public:
 	//insertion sort for linked lists
 	template<class T>
 	Node<T>* insertionSortLinkedList(Node<T>* head);
+	//sorting by count instead of key
+	template<class T>
+	Node<T>* insertionSortLinkedListByCount(Node<T>* head);
 	/*
 	THE NEXT GIANT SECTION IS FOR THE MERGE SORT FOR NODES. I KNOW IT'S FAR FROM
 	IDEAL TO DEFINE THESE HERE, BUT IF THEY'RE TO BE TEMPLATED, THIS IS THE ONLY
@@ -269,6 +272,128 @@ public:
 		first = first->getNext();
 		return val;
 	}
+	//SORT BY COUNT
+	template<class T>
+	Node<T>* mergeSortLinkedListByCount(Node<T>* head){
+
+		if(head == nullptr) return nullptr;
+	
+		//finding a length for the list
+		int length = 1;
+		Node<T>* trace = head;
+		while(trace->getNext() != nullptr){
+			trace = trace->getNext();
+			length++;
+		}
+		//the max grouping size we should be getting. 
+		int maxM = pow(2,ceil(log10(length)/log10(2)));
+	
+		return sortRecursionByCount(maxM,head);
+	}
+	/*
+	Same merge/insertion sort as above.
+	*/
+	template<class T>
+	Node<T>* sortRecursionByCount(int groupSize, Node<T>* head){
+		
+		if(head == nullptr) return nullptr;
+		
+		//return if we were passed a single node
+		if(groupSize==0){
+			Node<T>* val = head;
+			//'unlink' the node from the original linked list first
+			val->setNext(nullptr);
+			return val;
+		}
+
+		
+		//if the groups are smaller than 10...
+		if(groupSize <= 10){
+
+			/*
+			here, we find the end of the list.
+			it's either the node at groupsize-1, or somewhere before that.
+			*/
+			int i = 1;
+			Node<T>* index = head;
+			while(i<groupSize&&index->getNext()!=nullptr){
+				i++;
+				index = index->getNext();
+			}
+			//now we set the last node's "next" to null, to disconnect it from the main chain.
+			index->setNext(nullptr);
+			//additionally, we set the head's "prev" to null, to disconnect it on the other side.
+			head->setPrev(nullptr);
+
+			//now we run insertion sort on the linked list.
+			head = insertionSortLinkedListByCount(head);
+
+			//once again we find the end...
+			i = 0;
+			index = head;
+			while(i<groupSize&&index->getNext()!=nullptr){
+				i++;
+				index = index->getNext();
+			}
+
+			//and again we set the values...
+			index->setNext(nullptr);
+			head->setPrev(nullptr);
+			
+			return head;
+
+		}
+
+		//recurse on the right and left sides
+		//this value just indicates where in the middle of the list does our second sub-list start
+		Node<T>* right = Node<T>::get(groupSize/2,head);
+		//this is the merged list for the left side...
+		Node<T>* traceLeft = sortRecursionByCount(groupSize/2,head);
+		//this is the merged list for the right side...
+		Node<T>* traceRight = sortRecursionByCount(groupSize/2,right);
+
+		//our merged list
+		Node<T>* mergedListHead = new Node<T>();
+		Node<T>* mergedList = mergedListHead;
+
+		/*
+		now we basically "pop" nodes off of the two sub-lists (traceLeft and traceRight)
+		comparing them each time and chaining them in order.
+		*/
+		//while at least one of the lists has items left
+		while(traceLeft!=nullptr||traceRight!=nullptr){
+
+			//the smallest node, which will be added to the list
+			Node<T>* val;
+			//if the left list is empty...
+			if(traceLeft == nullptr){
+				val = traceRight;
+				traceRight = traceRight->getNext();
+			}
+			//if the right list is empty...
+			else if(traceRight == nullptr){
+				val = traceLeft;
+				traceLeft = traceLeft->getNext();
+			}
+			//if the right item is smaller than the left...
+			else if(traceRight->getCount()<traceLeft->getCount()){
+				val = traceRight;
+				traceRight = traceRight->getNext();
+			}
+			//if the left item is smaller (or equal) to the right..
+			else{
+				val = traceLeft;
+				traceLeft = traceLeft->getNext();
+			}
+		
+			//add the smaller item to the list...
+			mergedList->setNext(val);
+			mergedList = mergedList->getNext();
+		}
+
+		//return the entire now-merged list (excluding the first node, which was a dummy)
+		return mergedListHead->getNext();
+	}
 	/*
 	END SORTS FOR LINKED LISTS
 	*/
@@ -344,6 +469,42 @@ Node<T>* Metrics::insertionSortLinkedList(Node<T>* head){
 		int j = i;
 		//now we loop and shift node until the node hits a node smaller than it.
 		while(lessThan(index->getKey(),index->getPrev()->getKey())){
+			//we move it back in the list
+			index->moveTo(j-1, head);
+			//decrement
+			j--;
+		}
+		//increase index
+		i++;
+		//set new node
+		index = Node<T>::get(i,head);
+	}
+
+	return head;
+}
+template<class T>
+Node<T>* Metrics::insertionSortLinkedListByCount(Node<T>* head){
+	//find the minimum. if there are multiple, then the leftmost one should be moved.
+	Node<T>* index = head;
+	Node<T>* min = head;
+	while(index != nullptr){
+		//if we found a new minimum
+		if(index->getCount()<min->getCount()) min = index;
+		//progress through
+		index = index->getNext();
+	}
+	//insert the minimum at the beginning and set new head
+	head = min->moveTo(0,head);
+
+	//we begin at the third item
+	int i = 2;
+	index = Node<T>::get(i, head);
+	//now we interate through and sort. this is the outer loop.
+	while(index != nullptr){
+		//the current index, which we will now move backwards through.
+		int j = i;
+		//now we loop and shift node until the node hits a node smaller than it.
+		while(index->getCount()<index->getPrev()->getCount()){
 			//we move it back in the list
 			index->moveTo(j-1, head);
 			//decrement

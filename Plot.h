@@ -33,7 +33,11 @@ class Plot{
 		//2-1 scaling plot function
 		void plot2DScale(double*,double*,int);
 		//2-4 histogram - takes array of frequencies and length of array
-		void histogram(double*,int);
+		void histogram(double*,char*,int);
+		//
+		void numberXAxis(char*,int);
+		//find max of a set
+		static double findMax(double*,int);
 
 	private:
 		CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -62,8 +66,6 @@ class Plot{
 		
 		//redraw the plot
 		void redraw();
-		//find max of a set
-		double findMax(double*,int);
 		//number the axes
 		void numberAxes();
 		//plot a single point on the graph

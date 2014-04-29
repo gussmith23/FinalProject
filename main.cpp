@@ -53,18 +53,7 @@ int main(int argc, char* argv[]){
 						d = documentToLoad;
 
 						//YOU CAN PUT DEBUG STUFF HERE
-						
-						d.hashWords();
-						Node<string>** table = d.getHashTable();
-						cout << "test" << table[1]->getNext()->getNext()->getCount();
-						Metrics m = Metrics();
-						Node<string>* sorted = m.mergeSortLinkedList(table[0]->getNext());
-						cout<<"done"<<endl;
-						while(sorted!=nullptr){
-							cout <<endl<< sorted->getKey();
-							sorted = sorted->getNext();
-						}
-
+												
 					}
 					else{
 						cout << "Document load failed.\n";
@@ -161,13 +150,13 @@ int main(int argc, char* argv[]){
 				bool analyzeLoop = true;
 
 				do{
-					cout << "a. Plot\nb. Histogram\nc.Go back\n";
+					cout << "a. Plot\nb. Display chars by alphabetic order\nc. Display chars by frequency\nd. Go back\n";
 					char analyzeInput = NULL;
 					cin >> analyzeInput;
+					Plot p = Plot();
 					switch(analyzeInput){
 					case 'a':
 						{
-							Plot p = Plot();
 							/*
 							cout<< "Please enter your x coordinate: ";
 							int x,y;
@@ -185,14 +174,17 @@ int main(int argc, char* argv[]){
 						break;
 					case'b':
 						{
-							Plot p = Plot();
-							double frequencies[3] = {.2,.9,.7};
-							p.histogram(frequencies,3);
+							d.printParsedChars();
 						}
 						break;
-					case'c':
+					case'd':
 						{
 							analyzeLoop = false;
+						}
+						break;
+					case 'c':
+						{
+							d.printParsedCharsByFrequency();
 						}
 						break;
 					}

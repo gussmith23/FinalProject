@@ -1,6 +1,8 @@
 //1-3 Document class (cpp file)
 #include <Document.h>
 #include <Metrics.h>
+#include<Plot.h>
+#include <ctime>
 
 using namespace std;
 //constructors and deconstructors
@@ -14,6 +16,7 @@ Document::Document(string nameval){
 	to worry about it being un-initialized*/
 	words = new Stack<string>();
 	parseWords();
+	hashLength = 2;
 }
 //string name, int id
 Document::Document(string nameval, int idval){
@@ -24,6 +27,7 @@ Document::Document(string nameval, int idval){
 	to worry about it being un-initialized*/
 	words = new Stack<string>();
 	parseWords();
+	hashLength = 2;
 }
 
 //setters and geters
@@ -201,10 +205,18 @@ vector<char> Document::parseChar(){
 	//we iterate for each line.
 	for(size_t i = 0; i < lineArray.size(); i++){
 		//the chars to add
-		//we have to call parsechar with an arg until i figure out what booth wants
 		vector<char> charsToAdd = lineArray.at(i).parseChar();
 		//now we iterate for each of the chars to add, and add them
 		for(size_t j = 0; j < charsToAdd.size(); j++){
+			if(
+				(charsToAdd.at(j)=='.')||
+				(charsToAdd.at(j)=='?')||
+				(charsToAdd.at(j)==' ')||
+				(charsToAdd.at(j)=='!')||
+				(charsToAdd.at(j)=='-')||
+				(charsToAdd.at(j)=='&')||
+				(charsToAdd.at(j)=='\'')||
+				(charsToAdd.at(j)==',')) continue;
 			chars.push_back(charsToAdd.at(j));
 		}
 
@@ -311,12 +323,12 @@ void Document::reverseCompare(Document d){
 void Document::hashWords(){
 	
 	//the amount of spaces in the outer array
-	hashLength = 2;
+	hashLength = Document::hashLength;
 
-	hashTable = new Node<string>*[hashLength]();
+	hashTableWords = new Node<string>*[hashLength]();
 	//we initialize the hash table to the appropriate length
 	for(int i = 0; i < hashLength; i++){
-		hashTable[i] = new Node<string>();
+		hashTableWords[i] = new Node<string>();
 	}
 	//the stack of words
 	vector<string> s = parseWords();
@@ -336,7 +348,7 @@ void Document::hashWords(){
 		on the already existing node.
 		*/
 		//first find the head of the chain
-		Node<string>* head = hashTable[h];
+		Node<string>* head = hashTableWords[h];
 		//we keep iterating until we find the last node OR until we find a node whose key is the same
 		while((head->getNext() != 0)&&(head->getKey().compare(word)!=0)) head = head->getNext();
 
@@ -354,11 +366,172 @@ void Document::hashWords(){
 		
 	}
 	
-	setHashTable(hashTable);
+	setHashTableWords(hashTableWords);
 }
-Node<string>** Document::getHashTable() const {
-	return hashTable;
+/*
+hashes chars.
+*/
+void Document::hashChar(){
+	
+	//the amount of spaces in the outer array
+	hashLength = Document::hashLength;
+
+	hashTableChar = new Node<char>*[hashLength]();
+	//we initialize the hash table to the appropriate length
+	for(int i = 0; i < hashLength; i++){
+		hashTableChar[i] = new Node<char>();
+	}
+	//the stack of words
+	vector<char> s = parseChar();
+	//cycle for every word
+	for(int i = 0; i < s.size(); i++){
+		char c = s.at(i);
+		//convert to lowercase...
+		c = tolower(c);
+
+		//the hash itself
+		int h = 0, a = 127;
+		h = (a*h + c) % hashLength;
+		
+		/*
+		put the word in the table.
+		we either create a new node if one doesn't exist, or we increment count
+		on the already existing node.
+		*/
+		//first find the head of the chain
+		Node<char>* head = hashTableChar[h];
+		//we keep iterating until we find the last node OR until we find a node whose key is the same
+		while((head->getNext() != nullptr)&&(head->getKey() != c)) head = head->getNext();
+
+		//if we found a node whose key is the same, we increment the counter
+		if(Metrics::equals(head->getKey(),c)) head->setCount(head->getCount() + 1);
+		//otherwise, create a new node on the end
+		else{
+			//the new node
+			Node<char>* n = new Node<char>(c);
+			//set new node's prev to the previous node (current end of list)
+			n->setPrev(head);
+			//set the current end of the list's next to the new node (adding it to list)
+			head->setNext(n);	
+		}
+		
+	}
+	
+	setHashTableChar(hashTableChar);
 }
-void Document::setHashTable(Node<string>** val){
-	Document::hashTable = val;
+Node<string>** Document::getHashTableWords() const {
+	return hashTableWords;
+}
+void Document::setHashTableWords(Node<string>** val){
+	Document::hashTableWords = val;
+}
+Node<char>** Document::getHashTableChar() const {
+	return hashTableChar;
+}
+void Document::setHashTableChar(Node<char>** val){
+	Document::hashTableChar = val;
+}
+/*
+3-4 printParsedChars
+it firsts parses all chars into a hash table
+*/
+void Document::printParsedChars(){
+	
+	time_t c1 = clock();
+	
+	Metrics* m = new Metrics();
+	Plot* p = new Plot();
+
+	//we first set the hashlength to 1 and hash the chars...
+	int previousHashLength = hashLength;
+	hashLength = 1;
+	hashChar();
+	//this effectively gives us a linked-list of chars.
+
+	//we now sort the linked list.
+	//remember, the hash table's chains begin with a dummy node, so we use getNext...
+	Node<char>* head = m->mergeSortLinkedList(getHashTableChar()[0]->getNext());
+
+	//we find the length of the list.
+	int length = 1;
+	Node<char>* index = head;
+	while(index->getNext()!=nullptr){
+		length++;
+		index = index->getNext();
+	}
+
+	double* frequencies = new double[20];
+	char* symbols = new char[20];
+
+	//find the 10 first and final chars..
+	for(int i = 0; i < 10; i++){
+		
+		//the node near the start
+		Node<char>* beginning = Node<char>::get(i,head);
+		//the node near the end
+		Node<char>* end = Node<char>::get(length-1-i,head);
+
+		frequencies[i] = (double) beginning->getCount(); symbols[i] = beginning->getKey();
+		frequencies[i+10] = (double) end->getCount(); symbols[i+10] = end->getKey();
+		//cout<<symbols[i];
+
+	}
+	p->histogram(frequencies,symbols,20);
+
+	//reset hash length
+	hashLength = previousHashLength;
+
+	//print time
+	cout<<((double)clock()-(double)c1)/CLOCKS_PER_SEC << " seconds to generate.\n";
+
+}
+void Document::printParsedCharsByFrequency(){
+	
+	time_t c1 = clock();
+	
+	Metrics* m = new Metrics();
+	Plot* p = new Plot();
+
+	//we first set the hashlength to 1 and hash the chars...
+	int previousHashLength = hashLength;
+	hashLength = 1;
+	hashChar();
+	//this effectively gives us a linked-list of chars.
+
+	//we now sort the linked list.
+	//remember, the hash table's chains begin with a dummy node, so we use getNext...
+	Node<char>* head = m->mergeSortLinkedListByCount(getHashTableChar()[0]->getNext());
+
+	//we find the length of the list.
+	int length = 1;
+	Node<char>* index = head;
+	while(index->getNext()!=nullptr){
+		length++;
+		index = index->getNext();
+	}
+
+	double* frequencies = new double[20];
+	char* symbols = new char[20];
+
+	//find the 10 first and final chars..
+	for(int i = 0; i < 10; i++){
+		
+		//the node near the start
+		Node<char>* beginning = Node<char>::get(i,head);
+		//the node near the end
+		Node<char>* end = Node<char>::get(length-1-i,head);
+
+		frequencies[i+10] = (double) beginning->getCount(); symbols[i+10] = beginning->getKey();
+		frequencies[i] = (double) end->getCount(); symbols[i] = end->getKey();
+		//cout<<symbols[i];
+
+	}
+	p->histogram(frequencies,symbols,20);
+
+	//reset hash length
+	hashLength = previousHashLength;
+
+	//print time
+	cout<<((double)clock()-(double)c1)/CLOCKS_PER_SEC << " seconds to generate.\n";
+
 }

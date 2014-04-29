@@ -1,80 +1,8 @@
-﻿Build started 4/28/2014 6:23:10 PM.
+﻿Build started 4/28/2014 8:20:08 PM.
      1>Project "E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\FinalProject\FinalProject.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Document.cpp Line.cpp Plot.cpp main.cpp
-         Document.cpp
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(228): warning C4018: '<' : signed/unsigned mismatch
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(324): warning C4018: '<' : signed/unsigned mismatch
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(327): warning C4018: '<' : signed/unsigned mismatch
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(331): warning C4018: '<' : signed/unsigned mismatch
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(59): warning C4018: '<' : signed/unsigned mismatch
-                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(344) : see reference to function template instantiation 'bool Metrics::equals<T>(T,T)' being compiled
-                 with
-                 [
-                     T=std::string
-                 ]
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(64): warning C4018: '<' : signed/unsigned mismatch
-         Line.cpp
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\line.cpp(145): warning C4018: '<' : signed/unsigned mismatch
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\line.cpp(161): warning C4018: '<' : signed/unsigned mismatch
-         Plot.cpp
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(70): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(76): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(86): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(92): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(102): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(103): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(161): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(167): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(177): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(183): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(203): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(204): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(388): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(391): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(406): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(413): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(512): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(512): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(516): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(532): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(532): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\plot.cpp(538): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdlib.h(909) : see declaration of 'itoa'
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(127): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\main.cpp(61) : see reference to function template instantiation 'Node<T> *Metrics::mergeSortLinkedList<std::string>(Node<T> *)' being compiled
-                 with
-                 [
-                     T=std::string
-                 ]
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(24): warning C4018: '<' : signed/unsigned mismatch
-                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(231) : see reference to function template instantiation 'bool Metrics::lessThan<T>(T,T)' being compiled
-                 with
-                 [
-                     T=std::string
-                 ]
-                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(129) : see reference to function template instantiation 'Node<T> *Metrics::sortRecursion<std::string>(int,Node<T> *)' being compiled
-                 with
-                 [
-                     T=std::string
-                 ]
-                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\main.cpp(61) : see reference to function template instantiation 'Node<T> *Metrics::mergeSortLinkedList<std::string>(Node<T> *)' being compiled
-                 with
-                 [
-                     T=std::string
-                 ]
-     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(29): warning C4018: '<' : signed/unsigned mismatch
-         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.lib" /MACHINE:X86 Debug\Document.obj
          Debug\main.obj
@@ -85,4 +13,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.99
+Time Elapsed 00:00:01.01
