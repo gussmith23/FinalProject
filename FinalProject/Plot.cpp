@@ -468,19 +468,22 @@ the way this function works is as follows:
 4. x-axis labeled.
 5. vertical bars drawn
 */
-void Plot::histogram(double* frequencies,int length){
+void Plot::histogram(double* frequencies,char* symbols,int length){
 	
 	//always important to do.
 	updateCsbi();
 	//create the basic axis.
 	createAxis();
+	//find max frequency
+	int max = findMax(frequencies,length);
 	/*
 	set the max value for y. we choose 1 for the increment on the x axis so that each bar will
 	be evenly spaced, and there will be no extra space for other bars.
 	*/
-	setGraphMaxValues(length,findMax(frequencies,length),1,1);
+	setGraphMaxValues(length,1,1,1);
 	//number the axes
-	numberAxes();
+	numberYAxis();
+	numberXAxis(symbols,length);
 	/*
 	now we plot the bars. we do this by simply plotting the original point, and then plotting
 	at that same x position while decreasing the y value by 1. we do this over and over until 
@@ -491,12 +494,12 @@ void Plot::histogram(double* frequencies,int length){
 	//for each frequency
 	for(int i = 0; i < length; i++){
 		//the frequency we're dealing with
-		double freq = frequencies[i];
+		double freq = frequencies[i]/max;
 		/*
 		we plot over and over
 		we use j>.5 to make sure that the bar doesn't plot over the number on the x axis.
 		*/
-		for(double j = freq; j >= .05; j = j-.1){
+		for(double j = freq; j >= .1; j = j-.05){
 			//we plot at x=the correct column for the frequency and y=freq-num iterations
 			plotPoint(i+1,j);
 		}
@@ -524,6 +527,15 @@ void Plot::numberXAxis(){
 		for(int j = 1; j < digits; j++){
 			screen[height-2][loc+1+j] = holder[j];
 		}
+
+	}
+}
+void Plot::numberXAxis(char* symbols, int length){
+	for(int i = 1; i <= length; i++){
+
+		//we put the initial symbol on the graph
+		int loc = translateX(i*xincrement);
+		screen[height-2][loc+1] = symbols[i-1];
 
 	}
 }

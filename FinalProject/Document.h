@@ -28,7 +28,10 @@ class Document{
 		std::string getName() const;
 		void setName(std::string);
 		Stack<string>* getWords() const;
-		Node<string>** getHashTable() const;
+		Node<string>** getHashTableWords() const;
+		void setHashTableWords(Node<string>**);
+		Node<char>** getHashTableChar() const;
+		void setHashTableChar(Node<char>**);
 
 		//functions
 		//1-4 loadDocument functions
@@ -46,6 +49,10 @@ class Document{
 		void reverseCompare(Document);
 		//2-7 hashWords();
 		void hashWords();
+		void hashChar();
+		//3-4
+		void printParsedChars();
+		void printParsedCharsByFrequency();
 
 	private:
 		int linecount;
@@ -58,8 +65,10 @@ class Document{
 		//a stack of all words in the doc
 		Stack<string>* words;
 		//a double pointer for a chaining hash table.
-		Node<string>** hashTable;
-		//the length of the outer array of the hashTable
-		int hashLength;
+		Node<string>** hashTableWords;
+		//char hashtable.
+		Node<char>** hashTableChar;
+		//the length of the outer array of the hashTableWords
+		int hashLengthWords;int hashLengthChars;
 
 };
