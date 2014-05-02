@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 	bool exit = false;
 	//the welcome statement
 	cout << "Welcome!\n";
-	//the document loaded
+	//the document loaded - begins as a dummy
 	Document d =  Document("No Document Loaded",-1);
 	//the exit bool for the parse submenu
 	bool doParseLoop = true;
@@ -97,8 +97,8 @@ int main(int argc, char* argv[]){
 					//parsechar
 					case 'a':
 						{
-							vector<char> vec = d.parseChar();
-							cout << "Array of chars returned.\nLength: " << vec.size() << endl;
+							cout << "Number of letters: " << d.getAlphaCharArray().size() << endl;
+							cout << "Total number of characters: " << d.getCharArray().size() << endl;
 						}
 						break;
 					//parse words

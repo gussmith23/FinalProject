@@ -38,14 +38,14 @@ class Node{
 template<class T>
 Node<T>::Node(T key){
 	Node<T>::key = key;
-	next = NULL;
-	prev = NULL;
+	next = nullptr;
+	prev = nullptr;
 	count = 1;
 }
 template<class T>
 Node<T>::Node(){
-	next = NULL;
-	prev = NULL;
+	next = nullptr;
+	prev = nullptr;
 	key = T();
 	count = 1;
 }

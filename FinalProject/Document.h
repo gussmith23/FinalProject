@@ -24,11 +24,14 @@ class Document{
 		void addToLineArray(Line);
 		std::string getName() const;
 		void setName(std::string);
-		Stack<string>* getWords() const;
+		Stack<string>* getpWords() const;
 		Node<string>** getHashTableWords() const;
 		void setHashTableWords(Node<string>**);
 		Node<char>** getHashTableChar() const;
 		void setHashTableChar(Node<char>**);
+		vector<char> getCharArray() const; 
+		vector<char> getAlphaCharArray() const;
+		vector<string> setWordArray() const;
 
 		//functions
 		//1-4 loadDocument functions
@@ -38,10 +41,10 @@ class Document{
 		//1-11 parseWords
 		vector<string> parseWords();
 		//1-12 parseChar
-		vector<char> parseChar();
+		vector<char> parseChar(bool);
 		//2-3 linelengths
 		void lineLengths();
-		LineNode<int>* getLineLengthsLinkedList() const;
+		LineNode<int>* getpLineLengthsLinkedList() const;
 		//2-5 reversecompare
 		void reverseCompare(Document);
 		//2-7 hashWords();
@@ -56,16 +59,25 @@ class Document{
 		int wordcount;
 		//array of lines on the heap using the vector class
 		vector<Line> lineArray;
+		//the words in the document...
+		vector<string> wordArray;
+		//the chars in the document (all chars)
+		vector<char> charArray;
+		//the alpha chars in the document
+		vector<char> alphaCharArray;
+		//helper function
+		void defineVariables(); void runInitialFunctions();
+		//
 		std::string name;
 		//null terminated linked list with wordcounts and final chars
-		LineNode<int>* lineLengthsLinkedList;
+		LineNode<int>* pLineLengthsLinkedList;
 		//a stack of all words in the doc
-		Stack<string>* words;
+		Stack<string>* pWords;
 		//a double pointer for a chaining hash table.
 		Node<string>** hashTableWords;
 		//char hashtable.
 		Node<char>** hashTableChar;
-		//the length of the outer array of the hashTableWords
+		//the length of the outer array of both hash tables
 		int hashLengthWords;int hashLengthChars;
 
 };

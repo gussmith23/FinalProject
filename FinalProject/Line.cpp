@@ -120,7 +120,8 @@ vector<string> Line::parseWords(){
 	//iterate for every character in the string
 	for(size_t i = 0; i < str.length(); i++){
 		//if the char isn't a space or punctuation, add it to the word.
-		if(!((str[i] == ' ')||(str[i] == '.')||(str[i] == ',')||(str[i] == '!')||(str[i] == '?'))){
+		if(!(str[i] >= -1 && str[i] <= 255)) continue;
+		if(isalpha(str[i])){
 			word = word + str[i];
 		}
 		//else if it is one of those, end the word and add it to the vector

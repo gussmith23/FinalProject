@@ -28,7 +28,6 @@ Stack<T>::Stack(T value){
 /* Stack constructor: starts empty.*/
 template<class T>
 Stack<T>::Stack(){
-	//Set head to initial value node.
 	head = 0;
 }
 /* push puts new node on the stack, and returns the

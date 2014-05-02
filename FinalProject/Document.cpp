@@ -11,25 +11,42 @@ Document::Document(string nameval){
 	name = nameval;
 	//we use a six-digit random number here
 	id = rand() % (999999 - 100000 + 1) + 100000;
-	wordcount = NULL;
-	/*initialize the stack of words, and fill it right off the bat so that we don't have
-	to worry about it being un-initialized*/
-	words = new Stack<string>();
-	parseWords();
-	hashLengthWords = 97;
-	hashLengthChars = 8;
+	defineVariables();
 }
 //string name, int id
 Document::Document(string nameval, int idval){
 	name = nameval;
 	id = idval;
+	defineVariables();
+}
+//helper function to define all variables at once
+void Document::defineVariables(){
+	pWords = new Stack<string>();
 	wordcount = NULL;
-	/*initialize the stack of words, and fill it right off the bat so that we don't have
-	to worry about it being un-initialized*/
-	words = new Stack<string>();
-	parseWords();
-	hashLengthWords = 97;
+	linecount = NULL;
+	hashLengthWords = 1021;
 	hashLengthChars = 8;
+}
+void Document::runInitialFunctions(){
+	cout<<"Building document:"<<endl;
+	cout<<"Parsing words...";
+	wordArray = parseWords();
+	cout<<"done."<<endl;
+	cout<<"Parsing all characters...";
+	charArray = parseChar(false);
+	cout<<"done."<<endl;
+	cout<<"Parsing letters...";
+	alphaCharArray = parseChar(true);
+	cout<<"done."<<endl;
+	cout<<"Reading lines...";
+	lineLengths();
+	cout<<"done."<<endl;
+	cout<<"Hashing words...";
+	hashWords();
+	cout<<"done."<<endl;
+	cout<<"Hashing chars...";
+	hashChar();
+	cout<<"done."<<endl;
 }
 
 //setters and geters
@@ -82,9 +99,22 @@ string Document::getName() const{
 void Document::setName(string nameval){
 	name = nameval;
 }
-Stack<string>* Document::getWords() const { 
-	return words; 
+Stack<string>* Document::getpWords() const { 
+	return pWords; 
 }
+vector<char> Document::getCharArray() const{
+	return charArray; 
+}
+vector<char> Document::getAlphaCharArray() const{
+	return alphaCharArray;
+}
+vector<string> Document::setWordArray() const{
+	return wordArray;
+}
+LineNode<int>* Document::getpLineLengthsLinkedList() const{
+	return pLineLengthsLinkedList;
+}
+
 
 //functions
 /*1-4 loaddocument function: 4. Add a function call loadDocument that takes the name of the file. 
@@ -109,6 +139,8 @@ int Document::loadDocument(string filename){
 	int index = 0;
 	//the linecount, to count how many lines we generated
 	int linecount = 0;
+
+	cout<<"Reading filestream...";
 
 	//while there are chars to read
 	while(filestream.good()){
@@ -136,6 +168,7 @@ int Document::loadDocument(string filename){
 		//increase the index
 		index++;
 	}
+	cout<<"done."<<endl;
 	
 	//if the text didn't end with punctuation, then we make one more line with the remaining sentence
 	if((!line.compare(" "))&&(!line.compare(""))){
@@ -155,6 +188,9 @@ int Document::loadDocument(string filename){
 
 	//must close the file
 	filestream.close();
+	
+	//now that the document is loaded, we can define our variables.
+	runInitialFunctions();
 
 	//return 1 if successful.
 	return 1;
@@ -189,7 +225,7 @@ vector<string> Document::parseWords(){
 			//add the word
 			words.push_back(wordsToAdd.at(j));
 			//we also add the words to our main stack of all words
-			Document::words->push(wordsToAdd.at(j));
+			Document::pWords->push(wordsToAdd.at(j));
 		}
 	}
 
@@ -197,10 +233,13 @@ vector<string> Document::parseWords(){
 
 }
 /*1-12 Create a function in Document called parseChar that returns an
-array of char (similar to Line).*/
-vector<char> Document::parseChar(){
-	//so, we gotta get the chars for each line.
-
+array of char (similar to Line).
+This function takes a boolean representing whether or not we want ALL
+characters parsed, or only the letters.
+We want all characters parsed when we handle the ciphers; otherwise,
+when doing data analysis, we only want letters.
+*/
+vector<char> Document::parseChar(bool onlyAlpha){
 	//the vector we'll return
 	vector<char> chars; 
 
@@ -210,16 +249,12 @@ vector<char> Document::parseChar(){
 		vector<char> charsToAdd = lineArray.at(i).parseChar();
 		//now we iterate for each of the chars to add, and add them
 		for(size_t j = 0; j < charsToAdd.size(); j++){
-			if(
-				(charsToAdd.at(j)=='.')||
-				(charsToAdd.at(j)=='?')||
-				(charsToAdd.at(j)==' ')||
-				(charsToAdd.at(j)=='!')||
-				(charsToAdd.at(j)=='-')||
-				(charsToAdd.at(j)=='&')||
-				(charsToAdd.at(j)=='\'')||
-				(charsToAdd.at(j)==',')) continue;
-			chars.push_back(charsToAdd.at(j));
+			char c = charsToAdd.at(j);
+			//continue if the char will break isalpha (non-unicode)
+			if(!(c >= -1 && c <= 255)) continue;
+			//if we only want alpha...
+			if(onlyAlpha&&isalpha(tolower(c))) continue;
+			chars.push_back(c);
 		}
 
 	}
@@ -231,9 +266,11 @@ vector<char> Document::parseChar(){
 stores the word count of that line and the symbol that ended the sentence (., ?, !, etc).
 
 this function has no return - it simply creates the linked list, setting 
-Document::lineLengthsLinkedList equal to the head.
+Document::pLineLengthsLinkedList equal to the head.
 */
 void Document::lineLengths(){
+	//return if the lineArray hasn't been initialized
+	if(lineArray.size()<1) return;
 	//for the first line, we create the inital node (which is the head of the linked list
 	LineNode<int>* head = new LineNode<int>(lineArray.at(0).getWordcount(),lineArray.at(0).getPunctuation());	
 	//we use this in the scope of the function to keep track of the tail for easy adding
@@ -247,10 +284,7 @@ void Document::lineLengths(){
 		//set the newNode as the new tail
 		tail = newNode;
 	}
-	lineLengthsLinkedList = head;
-}
-LineNode<int>* Document::getLineLengthsLinkedList() const{
-	return lineLengthsLinkedList;
+	pLineLengthsLinkedList = head;
 }
 /*
 2-5 reverseCompare
@@ -265,8 +299,8 @@ void Document::reverseCompare(Document d){
 	d.parseWords();
 
 	//the stacks for the master and external
-	Stack<string>* master = Stack<string>::copyStack(Document::words);
-	Stack<string>* external = Stack<string>::copyStack(d.getWords());
+	Stack<string>* master = Stack<string>::copyStack(Document::pWords);
+	Stack<string>* external = Stack<string>::copyStack(d.getpWords());
 
 	//indicating how the comparisons will be notated.
 	cout << "MASTER vs. EXTERNAL" << endl;
@@ -333,7 +367,7 @@ void Document::hashWords(){
 		hashTableWords[i] = new Node<string>();
 	}
 	//the stack of words
-	vector<string> s = parseWords();
+	vector<string> s = wordArray;
 	//cycle for every word
 	for(int i = 0; i < s.size(); i++){
 		string word = s.at(i);
@@ -352,20 +386,27 @@ void Document::hashWords(){
 		//first find the head of the chain
 		Node<string>* head = hashTableWords[h];
 		//we keep iterating until we find the last node OR until we find a node whose key is the same
-		while((head->getNext() != 0)&&(head->getKey().compare(word)!=0)) head = head->getNext();
-
-		//if we found a node whose key is the same, we increment the counter
-		if(Metrics::equals(head->getKey(),word)) head->setCount(head->getCount() + 1);
-		//otherwise, create a new node on the end
-		else{
-			//the new node
-			Node<string>* n = new Node<string>(word);
-			//set new node's prev to the previous node (current end of list)
-			n->setPrev(head);
-			//set the current end of the list's next to the new node (adding it to list)
-			head->setNext(n);	
+		while((head!=nullptr)&&(head->getNext() != nullptr)&&(head->getKey().compare(word)!=0)){
+			//debug
+			//cout<<h<<" "<<head->getKey()<<endl;
+			
+			head = head->getNext();
 		}
-		
+
+		if(!(head==nullptr)){
+
+			//if we found a node whose key is the same, we increment the counter
+			if(Metrics::equals(head->getKey(),word)) head->setCount(head->getCount() + 1);
+			//otherwise, create a new node on the end
+			else{
+				//the new node
+				Node<string>* n = new Node<string>(word);
+				//set new node's prev to the previous node (current end of list)
+				n->setPrev(head);
+				//set the current end of the list's next to the new node (adding it to list)
+				head->setNext(n);	
+			}
+		}
 	}
 	
 	setHashTableWords(hashTableWords);
@@ -384,7 +425,7 @@ void Document::hashChar(){
 		hashTableChar[i] = new Node<char>();
 	}
 	//the stack of words
-	vector<char> s = parseChar();
+	vector<char> s = charArray;
 	//cycle for every word
 	for(int i = 0; i < s.size(); i++){
 		char c = s.at(i);
