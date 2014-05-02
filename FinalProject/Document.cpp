@@ -578,3 +578,45 @@ void Document::printParsedCharsByFrequency(){
 	cout<<((double)clock()-(double)c1)/CLOCKS_PER_SEC << " seconds to generate.\n";
 
 }
+/*
+Print letters a-z with frequencies.
+*/
+void Document::printAllChars(){
+	
+	//to hold the frequencies
+	double* freq = new double[26];
+
+	//the actual symbols
+	char* symbols = new char[26];
+
+	//iterate for every char a-z and find their frequencies.
+	for(char c = 97; c < 123; c++){
+
+		//add the symbol into the array
+		symbols[((int)c)-97] = c;
+
+		//set the freq of the char to 0 by default
+		freq[((int)c)-97] = 0;
+
+		//first we have to find the char in the hash.
+		int h = 0, a = 127;
+		h = (a*h + c) % Document::hashLengthChars;
+
+		//the head of the list
+		Node<char>* head = hashTableChar[h];
+
+		//iterate until we find the node, or until we reach the end
+		while(head != nullptr){
+			//if we find our key
+			if(head->getKey() == c){
+				freq[((int)c)-97] = head->getCount();
+				break;
+			}
+			head = head->getNext();
+		}
+	}
+
+	//plot.
+	Plot p = Plot();
+	p.histogram(freq,symbols,26);
+}

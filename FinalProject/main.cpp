@@ -172,7 +172,20 @@ int main(int argc, char* argv[]){
 							
 						}
 						break;
+					//histogram of all characters
 					case 'd':
+						{
+							d.printAllChars();
+						}
+						break;
+
+
+
+
+
+
+
+					case 'i':
 						{
 							analyzeLoop = false;
 						}

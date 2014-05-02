@@ -53,6 +53,7 @@ class Document{
 		//3-4
 		void printParsedChars();
 		void printParsedCharsByFrequency();
+		void printAllChars();
 
 	private:
 		int linecount;
