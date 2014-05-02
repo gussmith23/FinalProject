@@ -253,7 +253,7 @@ vector<char> Document::parseChar(bool onlyAlpha){
 			//continue if the char will break isalpha (non-unicode)
 			if(!(c >= -1 && c <= 255)) continue;
 			//if we only want alpha...
-			if(onlyAlpha&&isalpha(tolower(c))) continue;
+			if(onlyAlpha&&!isalpha(tolower(c))) continue;
 			chars.push_back(c);
 		}
 

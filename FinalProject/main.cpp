@@ -34,7 +34,7 @@ int main(int argc, char* argv[]){
 	//1-1: main function switch
 	do{
 		//menu selection
-		cout << "Please make a selection:\n1. Load document\n2. Output document\n3. Parse document\n4. Analyze document\n5. Exit\n";
+		cout << "Please make a selection:\n1. Load document\n2. Output document\n3. Analyze document\n5. Exit\n";
 		//resetting....
 		userArg = NULL;
 		cin >> userArg;
@@ -79,8 +79,8 @@ int main(int argc, char* argv[]){
 				}
 			break;
 
-			//parse document
-			case 3: 
+			//parse document REMOVE
+			case 1000: 
 				{
 				//first we check that the document is loaded...
 				if(d.id == -1){
@@ -138,7 +138,7 @@ int main(int argc, char* argv[]){
 			break;
 
 			//analyze document
-			case 4:
+			case 3:
 				{
 				//first we check that the document is loaded...
 				if(d.id == -1){
@@ -150,41 +150,31 @@ int main(int argc, char* argv[]){
 				bool analyzeLoop = true;
 
 				do{
-					cout << "a. Plot\nb. Display chars by alphabetic order\nc. Display chars by frequency\nd. Go back\n";
+					cout << "a. Print character count\nb. Print word count\nc. Print sentence count\nd. Go back\n";
 					char analyzeInput = NULL;
 					cin >> analyzeInput;
 					Plot p = Plot();
 					switch(analyzeInput){
 					case 'a':
 						{
-							/*
-							cout<< "Please enter your x coordinate: ";
-							int x,y;
-							cin >> x;
-							cout << endl << "Please enter your y coordinate: ";
-							cin >> y;
-							cout << endl;
-							*/
-							double x[3] = {36,16,59};
-							double y[3] = {17,5,8};
-
-							//p.plot2D(x,y,3);
-							p.plot2DScale(x,y,3);
+							cout << "Number of letters: " << d.getAlphaCharArray().size() << endl;
+							cout << "Total number of characters: " << d.getCharArray().size() << endl;
 						}
 						break;
 					case'b':
 						{
-							d.printParsedChars();
+							cout<< "Word count: " << d.getWordcount() << endl;
 						}
 						break;
-					case'd':
+					case'c':
+						{
+							cout<<"Sentence count: " << d.getLinecount() << endl;
+							
+						}
+						break;
+					case 'd':
 						{
 							analyzeLoop = false;
-						}
-						break;
-					case 'c':
-						{
-							d.printParsedCharsByFrequency();
 						}
 						break;
 					}
