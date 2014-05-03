@@ -163,58 +163,77 @@ int main(int argc, char* argv[]){
 					break;
 				}
 
+				//get the document they want to use
+				string docToAnalyzeName;
+				cout << "Which document would you like to analyze?"<<endl;
+				cin >> docToAnalyzeName;
+				Document docToAnalyze = searchByName(docToAnalyzeName,documents);
+				//if we can't find the document
+				if(docToAnalyze.getId() == -1){
+					cout << "Please input a valid file." <<endl;
+					break;
+				}
+
 				//should we keep iterating?
 				bool analyzeLoop = true;
 
 				do{
-					cout << "a. Print character count\nb. Print word count\nc. Print sentence count\nd. Go back\n";
+					cout << "a. Print character counts\nb. Print word count\nc. Print sentence count\nd. Print histogram of all chars\nf. Print histogram of top k words\ng. Print histogram of bottom k words\nh. Print word trace\ni. Go back\n";
 					char analyzeInput = NULL;
 					cin >> analyzeInput;
 					Plot p = Plot();
 					switch(analyzeInput){
 					case 'a':
 						{
-							cout << "Number of letters: " << d.getAlphaCharArray().size() << endl;
-							cout << "Total number of characters: " << d.getCharArray().size() << endl;
+							cout << "Number of letters: " << docToAnalyze.getAlphaCharArray().size() << endl;
+							cout << "Total number of characters: " << docToAnalyze.getCharArray().size() << endl;
 						}
 						break;
 					case'b':
 						{
-							cout<< "Word count: " << d.getWordcount() << endl;
+							cout<< "Word count: " << docToAnalyze.getWordcount() << endl;
 						}
 						break;
 					case'c':
 						{
-							cout<<"Sentence count: " << d.getLinecount() << endl;
+							cout<<"Sentence count: " << docToAnalyze.getLinecount() << endl;
 							
 						}
 						break;
 					//histogram of all characters
 					case 'd':
 						{
-							d.printAllChars();
+							docToAnalyze.printAllChars();
 						}
 						break;
+
+						/*STILL 
+						NEED
+						OFFSET
+						*/
+
+
+
 					//histogram of top k words
-					case 'e':
-						{
-							cout<<"How many words?"<<endl;
-							int k;
-							cin>>k;
-							d.printTopKWord(k);
-						}
-						break;
-					//histogram of bottom k words
 					case 'f':
 						{
 							cout<<"How many words?"<<endl;
 							int k;
 							cin>>k;
-							d.printBottomKWord(k);
+							docToAnalyze.printTopKWord(k);
+						}
+						break;
+					//histogram of bottom k words
+					case 'g':
+						{
+							cout<<"How many words?"<<endl;
+							int k;
+							cin>>k;
+							docToAnalyze.printBottomKWord(k);
 						}
 						break;
 					//word trace
-					case 'g':
+					case 'h':
 						{
 							cout<<"How many words?"<<endl;
 							int k;
@@ -226,7 +245,7 @@ int main(int argc, char* argv[]){
 								cin>>words[i];
 							}
 
-							d.wordTraceK(words,k);
+							docToAnalyze.wordTraceK(words,k);
 
 						}
 						break;
@@ -240,7 +259,13 @@ int main(int argc, char* argv[]){
 						}
 						break;
 					}
-					cout<<divider1<<d.getName()<<divider2;
+					//output the document names as a header
+					cout<<divider1;
+					for (int i = 0; i < documents.size(); i++)
+					{
+						cout<< " " << documents.at(i).getName() << " ";
+					}
+					cout<<divider2;
 				}while(analyzeLoop);
 				}
 			break;
