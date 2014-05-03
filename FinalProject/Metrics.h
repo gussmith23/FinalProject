@@ -23,7 +23,6 @@ private:
 			//convert to lowercase...
 			for(int i = 0; i < string1.length(); i++) string1[i] = tolower(string1[i]);
 			stringstream ss2;
-			ss2 << item2;
 			string string2 = ss2.str();
 			//convert to lowercase...
 			for(int i = 0; i < string2.length(); i++) string2[i] = tolower(string2[i]);

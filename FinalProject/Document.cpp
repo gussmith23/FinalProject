@@ -24,7 +24,7 @@ void Document::defineVariables(){
 	pWords = new Stack<string>();
 	wordcount = NULL;
 	linecount = NULL;
-	hashLengthWords = 1021;
+	hashLengthWords = 97;
 	hashLengthChars = 8;
 }
 void Document::runInitialFunctions(){
@@ -393,6 +393,7 @@ void Document::hashWords(){
 			head = head->getNext();
 		}
 
+
 		if(!(head==nullptr)){
 
 			//if we found a node whose key is the same, we increment the counter
@@ -408,8 +409,6 @@ void Document::hashWords(){
 			}
 		}
 	}
-	
-	setHashTableWords(hashTableWords);
 }
 /*
 hashes chars.
@@ -619,4 +618,152 @@ void Document::printAllChars(){
 	//plot.
 	Plot p = Plot();
 	p.histogram(freq,symbols,26);
+}
+/*
+Top k word: prints the top k words, where k is some integer.
+The function goes through each chain of the hash, compiling every node
+into one master list. It then merge sorts them by their count and pulls
+the first k elements from that list.
+*/
+void Document::printTopKWord(int k){
+	//for plotting
+	Plot* pPlot = new Plot();
+	//used for sorts
+	Metrics* pMetrics = new Metrics();
+	//the master list
+	Node<string>* pHead = new Node<string>();
+	//the first node
+	Node<string>* pOrigin = pHead;
+	//the array of frequencies
+	double* freq = new double[k];
+	//the words for the plot
+	string* words = new string[k];
+	//keep track of the length of the list
+	int length = 0;
+
+	//for every chain...
+	for(int i = 0; i < hashLengthWords; i++){
+		//first of the list (remember - first is a dummy node)
+		Node<string>* pIndex = getHashTableWords()[i]->getNext();
+
+		//while wehave nodes left
+		while(pIndex != nullptr){
+
+			//duplicate the node
+			Node<string>* pNode = new Node<string>(pIndex->getKey());
+			pNode->setCount(pIndex->getCount());
+
+			//increment length
+			length++;
+
+			//add the node to the master list
+			pHead->setNext(pNode);
+			pHead->getNext()->setPrev(pHead);
+
+			//advance our two lists
+			pHead = pHead->getNext();
+			pIndex = pIndex->getNext();
+		}
+
+	}
+
+	//advance by one (first node is a dummy node)
+	pOrigin = pOrigin->getNext();
+	//sort the list
+	pOrigin=pMetrics->mergeSortLinkedListByCount(pOrigin);
+
+	/*
+	now we pull the top k elements and compile them into arrays to pass to the plot...
+	*/
+	//for k iterations. j counts from the last index backwards.
+	for(int i = 0; i < k; i++){
+		//the Node 
+		Node<string>* pLast = Node<string>::get(length-1-i,pOrigin);		
+		//if it's equal to nullptr, break
+		if(pLast == nullptr) break;
+		//otherwise, add its info to the arrays
+		freq[i] = pLast->getCount();
+		words[i] = pLast->getKey();
+	}
+
+	//now we plot.
+	pPlot->histogram(freq,words,k);
+
+}
+/*
+Bottom k word: prints the bottom k words.
+Note: in addition to the k words, we also print the MOST frequent word, for
+reference.
+*/
+void Document::printBottomKWord(int k){
+	//for plotting
+	Plot* pPlot = new Plot();
+	//used for sorts
+	Metrics* pMetrics = new Metrics();
+	//the master list
+	Node<string>* pHead = new Node<string>();
+	//the first node
+	Node<string>* pOrigin = pHead;
+	//the array of frequencies
+	double* freq = new double[k+1];
+	//the words for the plot
+	string* words = new string[k+1];
+	//keep track of the length of the list
+	int length = 0;
+
+	//for every chain...
+	for(int i = 0; i < hashLengthWords; i++){
+		//first of the list (remember - first is a dummy node)
+		Node<string>* pIndex = getHashTableWords()[i]->getNext();
+
+		//while wehave nodes left
+		while(pIndex != nullptr){
+
+			//duplicate the node
+			Node<string>* pNode = new Node<string>(pIndex->getKey());
+			pNode->setCount(pIndex->getCount());
+
+			//increment length
+			length++;
+
+			//add the node to the master list
+			pHead->setNext(pNode);
+			pHead->getNext()->setPrev(pHead);
+
+			//advance our two lists
+			pHead = pHead->getNext();
+			pIndex = pIndex->getNext();
+		}
+
+	}
+
+	//advance by one (first node is a dummy node)
+	pOrigin = pOrigin->getNext();
+	//sort the list
+	pOrigin=pMetrics->mergeSortLinkedListByCount(pOrigin);
+
+
+	/*
+	now we pull the bottom k elements and compile them into arrays to pass to the plot...
+	*/
+	//we first add the MOST frequent word to the list.
+	Node<string>* pMostFreq = Node<string>::get(length-1,pOrigin);
+	freq[0] = pMostFreq->getCount();
+	words[0] = pMostFreq->getKey();
+	//the last Node in the list
+	Node<string>* pFirst = pOrigin;
+	//for k iterations. 
+	for(int i = 1; i < k+1; i++){
+		//if it's equal to nullptr, break
+		if(pFirst == nullptr) break;
+		//otherwise, add its info to the arrays
+		freq[i] = pFirst->getCount();
+		words[i] = pFirst->getKey();
+		//move backwards
+		pFirst = pFirst->getNext();
+	}
+
+	//now we plot.
+	pPlot->histogram(freq,words,k+1);
+
 }

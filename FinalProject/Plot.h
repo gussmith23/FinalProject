@@ -34,7 +34,9 @@ class Plot{
 		void plot2DScale(double*,double*,int);
 		//2-4 histogram - takes array of frequencies and length of array
 		void histogram(double*,char*,int);
-		//
+		//override to handle strings
+		void histogram(double*,string*,int);
+
 		void numberXAxis(char*,int);
 		//find max of a set
 		static double findMax(double*,int);

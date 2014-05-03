@@ -6,7 +6,7 @@ using namespace std;
 
 Plot::Plot(){
 	//setting heightBuffer
-	heightBuffer = 3;
+	heightBuffer = 6;
 
 	updateCsbi();
 }
@@ -507,6 +507,59 @@ void Plot::histogram(double* frequencies,char* symbols,int length){
 	//finally, draw 
 	redraw();
 }
+/*
+This histogram function plots frequencies, but then prints the corresponding string above the column.
+*/
+void Plot::histogram(double* frequencies,string* words,int length){
+	
+	//always important to do.
+	updateCsbi();
+	//create the basic axis.
+	createAxis();
+	//find max frequency
+	int max = findMax(frequencies,length);
+	/*
+	set the max value for y. we choose 1 for the increment on the x axis so that each bar will
+	be evenly spaced, and there will be no extra space for other bars.
+	*/
+	setGraphMaxValues(length,1,1,1);
+	//number the y axis
+	numberYAxis();
+	/*
+	now we plot the bars. we do this by simply plotting the original point, and then plotting
+	at that same x position while decreasing the y value by a small amount. we do this over and over until 
+	we hit the x axis; at that point we'll have a bar.
+	additionally, in this overridden function, at the end of each iteration we then print the word above
+	the bar.
+	*/
+	//for each frequency
+	for(int i = 0; i < length; i++){
+		//the frequency we're dealing with
+		double freq = frequencies[i]/max;
+		//the word we're printing
+		string word = words[i];
+		//the x-position of the word(moved over to the right by one)
+		int xPos = translateX(i+1)+1;
+		/*
+		we plot over and over
+		we use j>.5 to make sure that the bar doesn't plot over the number on the x axis.
+		*/
+		for(double j = freq; j >= .1; j = j-.01){
+			//we plot at x=the correct column for the frequency and y=freq-num iterations
+			plotPoint(i+1,j);
+		}
+
+		//we print the word above the column.
+		//for each char of the word...
+		for(int j = 0; j<word.length()&& j<Plot::graphHeight; j++){
+			screen[j][xPos] = word[j];
+		}
+
+	}
+	//finally, draw 
+	redraw();
+}
+
 /*
 in the next two functions, we're simply separating the numberAxes function
 */

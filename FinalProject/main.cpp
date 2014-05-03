@@ -178,8 +178,24 @@ int main(int argc, char* argv[]){
 							d.printAllChars();
 						}
 						break;
-
-
+					//histogram of top k words
+					case 'e':
+						{
+							cout<<"How many words?"<<endl;
+							int k;
+							cin>>k;
+							d.printTopKWord(k);
+						}
+						break;
+					//histogram of bottom k words
+					case 'f':
+						{
+							cout<<"How many words?"<<endl;
+							int k;
+							cin>>k;
+							d.printBottomKWord(k);
+						}
+						break;
 
 
 

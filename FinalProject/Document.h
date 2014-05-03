@@ -54,6 +54,8 @@ class Document{
 		void printParsedChars();
 		void printParsedCharsByFrequency();
 		void printAllChars();
+		void printTopKWord(int);
+		void printBottomKWord(int);
 
 	private:
 		int linecount;
