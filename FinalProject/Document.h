@@ -11,13 +11,14 @@ using namespace std;
 
 class Document{
 	public:
-		int id;
+		
 		
 		//constructors and destructors
 		Document(std::string);
 		Document(std::string,int);
 
 		//setters and getters
+		int getId() const; void setId(int);
 		int getLinecount() const;void setLinecount(int);
 		int getWordcount(); void setWordcount(int);
 		vector<Line> getLineArray() const; void setLineArray(vector<Line>);
@@ -59,6 +60,7 @@ class Document{
 		void wordTraceK(string*,int);
 
 	private:
+		int id;
 		int linecount;
 		int wordcount;
 		//array of lines on the heap using the vector class

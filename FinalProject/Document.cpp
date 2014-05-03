@@ -5,6 +5,7 @@
 #include <ctime>
 
 using namespace std;
+using std::cout;
 //constructors and deconstructors
 //string name, random id
 Document::Document(string nameval){
@@ -50,7 +51,13 @@ void Document::runInitialFunctions(){
 	cout<<"done."<<endl;
 }
 
-//setters and geters
+//setters and getters
+int Document::getId() const{
+	return id;
+}
+void Document::setId(int val){
+	id = val;
+}
 int Document::getLinecount() const{
 	return linecount;
 }
@@ -296,15 +303,15 @@ words on the stack. If the words are different, cout different, else cout same.
 */
 void Document::reverseCompare(Document d){
 
-	parseWords();
-	d.parseWords();
-
 	//the stacks for the master and external
 	Stack<string>* master = Stack<string>::copyStack(Document::pWords);
 	Stack<string>* external = Stack<string>::copyStack(d.getpWords());
 
+	//the number of different words
+	int numDifferent = 0;
+
 	//indicating how the comparisons will be notated.
-	cout << "MASTER vs. EXTERNAL" << endl;
+	std::cout << name << " vs. " << d.getName() << endl;
 
 	//our escape boolean
 	bool running = false;
@@ -318,41 +325,28 @@ void Document::reverseCompare(Document d){
 	//if neither is empty, then we'll actually execute our loop.
 	if(!((masterStr.empty())&&(externalStr.empty()))) running = true;
 	else{
-		cout << "Error: One of the selected documents is empty!" << endl;
+		std::cout << "Error: One of the selected documents is empty!" << endl;
 		return;
 	}
 	while(running){
-		//comparison goes at the top
-		string word;
-		if(!masterStr.compare(externalStr)) word = "SAME";
-		else word = "DIFFERENT";
-		cout<< masterStr << " vs. " <<externalStr << ": " << word << endl;
+		//if our words aren't the same
+		if(masterStr.compare(externalStr)!=0){
+			numDifferent++;
+		}
 
 		//getting new strings goes at the bottom - we decide if we run through one more time		
 		masterStr = master->pop();
 		externalStr = external->pop();
 
-		if((external->getHead() == 0)||(master->getHead() == 0)) running = false;
-		/*
-		//if both are empty...
-		if((masterStr.empty())&&(externalStr.empty())){
-			cout << "Reached the end of both strings!" << endl; 
+		//if one of the strings is empty
+		if((external->getHead() == 0)||(master->getHead() == 0)){
+			if((external->getHead() == 0)) std::cout << d.getName() << " ran out of words!" << endl;
+			if((master->getHead() == 0)) std::cout << name << " ran out of words!" << endl;
 			running = false;
 		}
-		//else if either of them is empty...
-		else if(masterStr.empty()){
-			cout << "Reached the end of MASTER document!" << endl;
-			running = false;
-		}
-		else if(externalStr.empty()){
-			cout << "Reached the end of EXTERNAL document!" << endl;
-			running = false;
-		}
-		*/
 	}
-
-
-	cout << "End of comparison." << endl;
+	std::cout << "Number of words different: " << numDifferent << endl;
+	std::cout << "End of comparison." << endl;
 }
 /*
 2-7 hashWords - hashes words into a hashtable.

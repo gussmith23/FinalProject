@@ -13,8 +13,11 @@ check updated hash (3-2) (i think it's done)
 
 using namespace std;
 
-int main(int argc, char* argv[]){
+Document searchByName(string,vector<Document>);
 
+int main(int argc, char* argv[]){
+	//a set of loaded documents
+	vector<Document> documents = vector<Document>();
 	//the user's input
 	int userArg = NULL;
 	//to exit the program, this needs to be switched
@@ -25,8 +28,8 @@ int main(int argc, char* argv[]){
 	Document d =  Document("No Document Loaded",-1);
 	//the exit bool for the parse submenu
 	bool doParseLoop = true;
-	//the input for the load document option
-	string loadDocumentInput;
+	//the input for the load document option - filename, and user-given name
+	string loadDocumentInput; string docName;
 	//the divider used to separate the console
 	string divider2 = "-------------------------\n";
 	string divider1 = "-------------------------";
@@ -43,14 +46,18 @@ int main(int argc, char* argv[]){
 			//load document
 			case 1:
 				{
-					cout<<"Please enter the name of the document.\n";
+					cout<<"Please enter the filename of the document.\n";
 					cin >> loadDocumentInput;
+					cout<<"Give the file a name:\n";
+					cin >> docName;
 					//create a new document with the name given
 					Document documentToLoad = Document(loadDocumentInput);
+					//set the document name
+					documentToLoad.setName(docName);
 					//load the document and check if it passes
 					if(documentToLoad.loadDocument(loadDocumentInput)){
 						//if it passes...
-						d = documentToLoad;
+						documents.push_back(documentToLoad);
 
 						//YOU CAN PUT DEBUG STUFF HERE
 												
@@ -66,8 +73,18 @@ int main(int argc, char* argv[]){
 			case 2: 
 				{
 					//to output the document, we first must check if we have a document loaded.
-					if(d.id == -1){
+					if(documents.size() < 1){
 						cout<<"Please load a document first.\n";
+						break;
+					}
+
+					string docToOutputName;
+					cout<<"Please enter the name of the file you'd like to output.\n";
+					cin >> docToOutputName;
+					Document docToOutput = searchByName(docToOutputName,documents);
+					//if we can't find the document
+					if(docToOutput.getId() == -1){
+						cout << "Please input a valid file." <<endl;
 						break;
 					}
 
@@ -75,7 +92,7 @@ int main(int argc, char* argv[]){
 					string outputDocumentInput;
 					cout<<"Please enter the desired name of the output file.\n";
 					cin >> outputDocumentInput;
-					d.outputDocument(outputDocumentInput);
+					docToOutput.outputDocument(outputDocumentInput);
 				}
 			break;
 
@@ -83,7 +100,7 @@ int main(int argc, char* argv[]){
 			case 1000: 
 				{
 				//first we check that the document is loaded...
-				if(d.id == -1){
+				if(documents.size() < 1){
 					cout<<"Please load a document first.\n";
 					break;
 				}
@@ -141,7 +158,7 @@ int main(int argc, char* argv[]){
 			case 3:
 				{
 				//first we check that the document is loaded...
-				if(d.id == -1){
+				if(documents.size() < 1){
 					cout<<"Please load a document first.\n";
 					break;
 				}
@@ -228,6 +245,84 @@ int main(int argc, char* argv[]){
 				}
 			break;
 
+			case 4:
+				{
+				//first we check that the document is loaded...
+				if(documents.size() < 2){
+					cout<<"Please load two documents first.\n";
+					break;
+				}
+
+				//should we keep iterating?
+				bool documentloop = true;
+				//the two documents we'll compare
+				Document doc1 = Document("",-1);Document doc2 = Document("",-1);
+
+				do{
+					
+					cout << "a. Input document names\nb. Clear document names\nc. Compare different\nd. Go back\n";
+					char analyzeInput = NULL;
+					cin >> analyzeInput;
+					switch(analyzeInput){
+					//input doc names
+					case 'a':
+						{
+							bool valid = false;
+							
+							while(!valid){
+								cout<<"Input document 1's name:"<<endl;
+								string doc1name;
+								cin >> doc1name;
+								doc1 = searchByName(doc1name, documents);
+								if(doc1.getId() != -1) valid = true;
+								else cout<<"Input a valid name."<<endl;
+							}
+
+							valid = false;
+
+							while(!valid){
+								cout<<"Input document 2's name:"<<endl;
+								string doc2name;
+								cin >> doc2name;
+								doc2 = searchByName(doc2name, documents);
+								if(doc2.getId() != -1) valid = true;
+								else cout<<"Input a valid name."<<endl;
+							}
+
+						}
+						break;
+					//clear
+					case 'b':
+						{
+							doc1 = Document("",-1);
+							doc2 = Document("",-1);
+							cout << "Documents cleared." << endl;
+						}
+						break;
+					//compare
+					case 'c':
+						{
+							doc1.reverseCompare(doc2);
+						}
+						break;
+					//exit
+					case 'd':
+						{
+							documentloop = false;
+						}
+						break;
+					}
+					//output the document names as a header
+					cout<<divider1;
+					for (int i = 0; i < documents.size(); i++)
+					{
+						cout<< " " << documents.at(i).getName() << " ";
+					}
+					cout<<divider2;
+				}while(documentloop);
+				}
+			break;
+
 			//exit
 			case 5:
 				exit = true;
@@ -237,9 +332,23 @@ int main(int argc, char* argv[]){
 				cout << "Please make a valid selection.\n";
 			break;
 		}
-		cout<<divider1<<d.getName()<<divider2;
+		//output the document names as a header
+		cout<<divider1;
+		for (int i = 0; i < documents.size(); i++)
+		{
+			cout<< " " << documents.at(i).getName() << " ";
+		}
+			cout<<divider2;
 	}while(!exit);
 	
 	return 0;
 
+}
+
+Document searchByName(string docName,vector<Document> docs){
+	//for every document...
+	for(int i = 0; i<docs.size(); i++){
+		if(docs.at(i).getName() == docName) return docs.at(i);
+	}
+	return Document("",-1);
 }

@@ -1,8 +1,74 @@
-﻿Build started 5/3/2014 12:54:28 AM.
+﻿Build started 5/3/2014 2:02:08 AM.
      1>Project "E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\FinalProject\FinalProject.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Document.cpp main.cpp
+         Document.cpp
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(287): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(367): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(370): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(374): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(399): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(374) : definition of 'i' ignored
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(367) : definition of 'i' used
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(406): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(374) : definition of 'i' ignored
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(367) : definition of 'i' used
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(431): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(794): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(798): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(808): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(798) : definition of 'i' ignored
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(788) : definition of 'i' used
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(811): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(798) : definition of 'i' ignored
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(788) : definition of 'i' used
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(812): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(798) : definition of 'i' ignored
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(788) : definition of 'i' used
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(816): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(798) : definition of 'i' ignored
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(788) : definition of 'i' used
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(58): warning C4018: '<' : signed/unsigned mismatch
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(395) : see reference to function template instantiation 'bool Metrics::equals<T>(T,T)' being compiled
+                 with
+                 [
+                     T=std::string
+                 ]
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(63): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(129): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(497) : see reference to function template instantiation 'Node<T> *Metrics::mergeSortLinkedList<char>(Node<T> *)' being compiled
+                 with
+                 [
+                     T=char
+                 ]
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(288): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(547) : see reference to function template instantiation 'Node<T> *Metrics::mergeSortLinkedListByCount<char>(Node<T> *)' being compiled
+                 with
+                 [
+                     T=char
+                 ]
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(24): warning C4018: '<' : signed/unsigned mismatch
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(233) : see reference to function template instantiation 'bool Metrics::lessThan<T>(T,T)' being compiled
+                 with
+                 [
+                     T=char
+                 ]
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(131) : see reference to function template instantiation 'Node<T> *Metrics::sortRecursion<char>(int,Node<T> *)' being compiled
+                 with
+                 [
+                     T=char
+                 ]
+                 e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\document.cpp(497) : see reference to function template instantiation 'Node<T> *Metrics::mergeSortLinkedList<char>(Node<T> *)' being compiled
+                 with
+                 [
+                     T=char
+                 ]
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\metrics.h(28): warning C4018: '<' : signed/unsigned mismatch
          main.cpp
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\main.cpp(317): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\main.cpp(337): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\my useful stuff\school stuff\freshman\cmpsci122\project\finalproject\finalproject\main.cpp(350): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\My Useful Stuff\School Stuff\freshman\cmpsci122\project\FinalProject\Debug\FinalProject.lib" /MACHINE:X86 Debug\Document.obj
          Debug\main.obj
@@ -13,4 +79,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.37
+Time Elapsed 00:00:02.02
