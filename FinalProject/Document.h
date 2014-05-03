@@ -56,6 +56,7 @@ class Document{
 		void printAllChars();
 		void printTopKWord(int);
 		void printBottomKWord(int);
+		void wordTraceK(string*,int);
 
 	private:
 		int linecount;

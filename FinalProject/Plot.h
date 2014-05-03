@@ -29,9 +29,8 @@ class Plot{
 		//functions
 		//1-14
 		void plot2D(double*,double*,int);
-		void plotSinglePoint(double,double);
 		//2-1 scaling plot function
-		void plot2DScale(double*,double*,int);
+		void plot2DScale(double*,double*,char*,int);
 		//2-4 histogram - takes array of frequencies and length of array
 		void histogram(double*,char*,int);
 		//override to handle strings
@@ -71,7 +70,7 @@ class Plot{
 		//number the axes
 		void numberAxes();
 		//plot a single point on the graph
-		void plotPoint(double,double);
+		void plotPoint(double,double,char);
 		//separating the numberAxes()  function
 		void numberXAxis(); void numberYAxis();
 

@@ -14,6 +14,10 @@ class Node{
 		void setKey(T);
 		int getCount() const;
 		void setCount(int);
+		int getFirst() const;
+		void setFirst(int);
+		int getLast() const;
+		void setLast(int);
 
 		//moves to index
 		Node<T>* moveTo(int,Node<T>*); //new
@@ -34,6 +38,9 @@ class Node{
 		Node<T>* next;
 		Node<T>* prev;
 		int count;
+		//for word trace
+		int first;
+		int last;
 };
 template<class T>
 Node<T>::Node(T key){
@@ -41,6 +48,8 @@ Node<T>::Node(T key){
 	next = nullptr;
 	prev = nullptr;
 	count = 1;
+	first = NULL;
+	last = NULL;
 }
 template<class T>
 Node<T>::Node(){
@@ -48,6 +57,8 @@ Node<T>::Node(){
 	prev = nullptr;
 	key = T();
 	count = 1;
+	first = NULL;
+	last = NULL;
 }
 template<class T>
 Node<T>* Node<T>::getNext() const{
@@ -81,7 +92,22 @@ template<class T>
 void Node<T>::setCount(int val){
 	count = val;
 }
-
+template<class T>
+int Node<T>::getFirst() const{
+	return first;
+}
+template<class T>
+void Node<T>::setFirst(int val){
+	first = val;
+}
+template<class T>
+int Node<T>::getLast() const{
+	return last;
+}
+template<class T>
+void Node<T>::setLast(int val){
+	last = val;
+}
 
 //takes the head of the list and the desired index.
 template<class T>

@@ -46,6 +46,7 @@ void Document::runInitialFunctions(){
 	cout<<"done."<<endl;
 	cout<<"Hashing chars...";
 	hashChar();
+	getWordcount();
 	cout<<"done."<<endl;
 }
 
@@ -396,12 +397,19 @@ void Document::hashWords(){
 
 		if(!(head==nullptr)){
 
-			//if we found a node whose key is the same, we increment the counter
-			if(Metrics::equals(head->getKey(),word)) head->setCount(head->getCount() + 1);
+			//if we found a node whose key is the same...
+			if(Metrics::equals(head->getKey(),word)){
+				//increment the count
+				head->setCount(head->getCount() + 1);
+				//log that this was (up to now) the LAST time we saw the node
+				head->setLast(i+1);
+			}
 			//otherwise, create a new node on the end
 			else{
 				//the new node
 				Node<string>* n = new Node<string>(word);
+				//we log that this was the FIRST appearance of this node (i plus 1 because i=0 represents the 1st word)
+				n->setFirst(i+1);
 				//set new node's prev to the previous node (current end of list)
 				n->setPrev(head);
 				//set the current end of the list's next to the new node (adding it to list)
@@ -765,5 +773,62 @@ void Document::printBottomKWord(int k){
 
 	//now we plot.
 	pPlot->histogram(freq,words,k+1);
+
+}
+/*
+This function creates a plot, where for each point x represents first appearance
+of the word and y represents last appearance.
+x and y themselves will actually represent word number in the document divided by
+the average number of words per sentence.
+*/
+void Document::wordTraceK(string* words, int k){
+	Plot* pPlot = new Plot();	
+	//average words per sentence
+	double averageWordsPerSentence = wordcount/linecount;
+	//the list of x and y points
+	double* x = new double[k]; double* y = new double[k];
+	//the symbols representing the words (letters a through however many we need)
+	char* symbols = new char[k];
+
+	//for each word...
+	for(int i = 0; i<k; i++){
+		/*
+		Now we use our hash to search for the word...
+		*/
+		string word = words[i];
+		//convert to lowercase...
+		for(int i = 0; i < word.length(); i++) word[i] = tolower(word[i]);
+
+		int h = 0, a = 127;
+		//h will be between 0 and hashLength-1
+		for(int i = 0; i<word.length(); i++) h = (a*h + word[i]) % hashLengthWords;
+		
+		//find the head of the chain
+		Node<string>* pHead = hashTableWords[h];
+		//we keep progressing until we find the last node OR until we find a node whose key is the same
+		while((pHead!=nullptr)&&(pHead->getNext() != nullptr)&&(pHead->getKey().compare(word)!=0)) pHead = pHead->getNext();
+
+		//if it's nullptr...
+		if(pHead == nullptr){
+			//set both points to zero (the word did not appear!)
+			x[i] = 0; y[i] = 0;
+		}else{ //else, the word DID appear...
+			//we represent the word as 
+			x[i] = pHead->getFirst()/averageWordsPerSentence;
+			y[i] = pHead->getLast()/averageWordsPerSentence;
+		}
+
+		//set the symbol of the word
+		symbols[i] = 'a' + i;
+	}
+	//plot the points
+	pPlot->plot2DScale(x,y,symbols,k);
+
+	cout<<"(letter used:word indicated)"<<endl;
+	//print the key - matching the letter used as a point to the word it indicates
+	for (int i = 0; i < k; i++)
+	{
+		cout<<symbols[i]<<": "<<words[i]<< " First: " << floor(x[i]) << " Last: " << floor(y[i]) <<endl;
+	}
 
 }

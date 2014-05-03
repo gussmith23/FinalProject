@@ -196,7 +196,23 @@ int main(int argc, char* argv[]){
 							d.printBottomKWord(k);
 						}
 						break;
+					//word trace
+					case 'g':
+						{
+							cout<<"How many words?"<<endl;
+							int k;
+							cin>>k;
+							//now we'll collect the words...
+							string* words = new string[k];
+							for(int i = 0; i<k; i++){
+								cout<<"Enter word #" << i+1 << ":"<<endl;
+								cin>>words[i];
+							}
 
+							d.wordTraceK(words,k);
+
+						}
+						break;
 
 
 
