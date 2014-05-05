@@ -178,7 +178,7 @@ int main(int argc, char* argv[]){
 				bool analyzeLoop = true;
 
 				do{
-					cout << "a. Print character counts\nb. Print word count\nc. Print sentence count\nd. Print histogram of all chars\nf. Print histogram of top k words\ng. Print histogram of bottom k words\nh. Print word trace\ni. Go back\n";
+					cout << "a. Print character counts\nb. Print word count\nc. Print sentence count\nd. Print histogram of all chars\ne. Print histogram of all chars, offset\nf. Print histogram of top k words\ng. Print histogram of bottom k words\nh. Print word trace\ni. Go back\n";
 					char analyzeInput = NULL;
 					cin >> analyzeInput;
 					Plot p = Plot();
@@ -207,13 +207,15 @@ int main(int argc, char* argv[]){
 						}
 						break;
 
-						/*STILL 
-						NEED
-						OFFSET
-						*/
-
-
-
+					//histogram offset
+					case 'e':
+						{
+							cout<<"Enter character offset:"<<endl;
+							int offset;
+							cin>>offset;
+							docToAnalyze.printAllCharsOffset(offset);
+						}
+						break;
 					//histogram of top k words
 					case 'f':
 						{

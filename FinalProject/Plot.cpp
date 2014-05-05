@@ -402,7 +402,7 @@ void Plot::histogram(double* frequencies,char* symbols,int length){
 		we plot over and over
 		we use j>.5 to make sure that the bar doesn't plot over the number on the x axis.
 		*/
-		for(double j = freq; j >= .1; j = j-.05){
+		for(double j = freq; j >= .15; j = j-.001){
 			//we plot at x=the correct column for the frequency and y=freq-num iterations
 			plotPoint(i+1,j,'*');
 		}

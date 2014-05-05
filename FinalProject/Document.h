@@ -55,6 +55,7 @@ class Document{
 		void printParsedChars();
 		void printParsedCharsByFrequency();
 		void printAllChars();
+		void printAllCharsOffset(int);
 		void printTopKWord(int);
 		void printBottomKWord(int);
 		void wordTraceK(string*,int);

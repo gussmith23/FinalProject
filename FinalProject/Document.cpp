@@ -623,6 +623,51 @@ void Document::printAllChars(){
 	p.histogram(freq,symbols,26);
 }
 /*
+Print letters (offset)-z with frequencies.
+*/
+void Document::printAllCharsOffset(int offset){
+	
+	//return if offset is too large
+	if(offset<0||offset>25) return;
+
+	//to hold the frequencies
+	double* freq = new double[26-offset];
+
+	//the actual symbols
+	char* symbols = new char[26-offset];
+
+	//iterate for every char a+offset-z and find their frequencies.
+	for(int c = 97+offset,i=0; c < 123; c++, i++){
+
+		//add the symbol into the array
+		symbols[i] = (char)c;
+
+		//set the freq of the char to 0 by default
+		freq[i] = 0;
+
+		//first we have to find the char in the hash.
+		int h = 0, a = 127;
+		h = (a*h + (char)c) % Document::hashLengthChars;
+
+		//the head of the list
+		Node<char>* head = hashTableChar[h];
+
+		//iterate until we find the node, or until we reach the end
+		while(head != nullptr){
+			//if we find our key
+			if(head->getKey() == (char)c){
+				freq[i] = head->getCount();
+				break;
+			}
+			head = head->getNext();
+		}
+	}
+
+	//plot.
+	Plot p = Plot();
+	p.histogram(freq,symbols,26-offset);
+}
+/*
 Top k word: prints the top k words, where k is some integer.
 The function goes through each chain of the hash, compiling every node
 into one master list. It then merge sorts them by their count and pulls
