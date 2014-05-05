@@ -61,6 +61,9 @@ class Document{
 		//ciphers
 		vector<Line> caesar(int);
 		vector<Line> vigenere(string);
+		//deciphers
+		vector<Line> caesar_d(int);
+		vector<Line> vigenere_d(string);
 		//helper function
 		 void runInitialFunctions();
 

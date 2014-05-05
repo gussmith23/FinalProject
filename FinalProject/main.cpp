@@ -31,13 +31,13 @@ int main(int argc, char* argv[]){
 	//the input for the load document option - filename, and user-given name
 	string loadDocumentInput; string docName;
 	//the divider used to separate the console
-	string divider2 = "-------------------------\n";
-	string divider1 = "-------------------------";
+	string divider2 = "<-------\n";
+	string divider1 = "\n------->";
 
 	//1-1: main function switch
 	do{
 		//menu selection
-		cout << "Please make a selection:\n1. Load document\n2. Output document\n3. Analyze document\n5. Exit\n";
+		cout << "Please make a selection:\n1. Load document\n2. Output document\n3. Analyze document\n4. Compare two documents\n5. Encrypt\n6. Decrypt\n7. Exit\n";
 		//resetting....
 		userArg = NULL;
 		cin >> userArg;
@@ -386,7 +386,7 @@ int main(int argc, char* argv[]){
 							//we get the set of encrypted lines...
 							vector<Line> encryptedLines = docToEncrypt.caesar(offset);
 							//we create a new "encrypted" document...
-							Document encryptedDoc = Document(docToEncryptName + "_encrypted");
+							Document encryptedDoc = Document(docToEncryptName + "_c_en");
 							//set the line array of encrypted document to the encrypted lines
 							encryptedDoc.setLineArray(encryptedLines);
 							//get data from the new lines so we can then analyze them
@@ -416,7 +416,7 @@ int main(int argc, char* argv[]){
 							//we get the set of encrypted lines...
 							vector<Line> encryptedLines = docToEncrypt.vigenere(key);
 							//we create a new "encrypted" document...
-							Document encryptedDoc = Document(docToEncryptName + "_encrypted");
+							Document encryptedDoc = Document(docToEncryptName + "_v_en");
 							//set the line array of encrypted document to the encrypted lines
 							encryptedDoc.setLineArray(encryptedLines);
 							//get data from the new lines so we can then analyze them
@@ -447,7 +447,99 @@ int main(int argc, char* argv[]){
 
 			//decrypt
 			case 6:
-				exit = true;
+				{
+				//check that the document is loaded...
+				if(documents.size() < 1){
+					cout<<"Please load two documents first.\n";
+					break;
+				}
+
+				//should we keep iterating?
+				bool decryptloop = true;
+
+				do{
+					
+					cout << "a. Caesar decipher\nb. Vigenere decipher\nc. Go back\n";
+					char analyzeInput = NULL;
+					cin >> analyzeInput;
+					switch(analyzeInput){
+					//caesar decipher
+					case 'a':
+						{
+							//get the document
+							cout<<"Which document would you like to decrypt?"<<endl;
+							string docToDecryptName;
+							cin >> docToDecryptName;
+							Document docToDecrypt = searchByName(docToDecryptName,documents);
+							//if we can't find it, return;
+							if(docToDecrypt.getId()==-1){
+								cout<<"Please choose a valid file."<<endl;
+								break;
+							}
+							//else, get the offset...
+							cout<<"What offset do you want to use?"<<endl;
+							int offset;
+							cin>>offset;
+							//we get the set of decrypted lines...
+							vector<Line> decryptedLines = docToDecrypt.caesar_d(offset);
+							//we create a new "decrypted" document...
+							Document decryptedDoc = Document(docToDecryptName + "_c_de");
+							//set the line array of decrypted document to the decrypted lines
+							decryptedDoc.setLineArray(decryptedLines);
+							//get data from the new lines so we can then analyze them
+							decryptedDoc.runInitialFunctions();
+							//put the doc in the list of viewable docs
+							documents.push_back(decryptedDoc);
+							cout<<"Decrypted."<<endl;
+						break;
+						}
+					//vigenere decipher
+					case 'b':
+						{
+							//get the document
+							cout<<"Which document would you like to decrypt?"<<endl;
+							string docToDecryptName;
+							cin >> docToDecryptName;
+							Document docToDecrypt = searchByName(docToDecryptName,documents);
+							//if we can't find it, return;
+							if(docToDecrypt.getId()==-1){
+								cout<<"Please choose a valid file."<<endl;
+								break;
+							}
+							//else, get the offset...
+							cout<<"What key do you want to use?"<<endl;
+							string key;
+							cin>>key;
+							//we get the set of decrypted lines...
+							vector<Line> decryptedLines = docToDecrypt.vigenere_d(key);
+							//we create a new "decrypted" document...
+							Document decryptedDoc = Document(docToDecryptName + "_v_de");
+							//set the line array of decrypted document to the decrypted lines
+							decryptedDoc.setLineArray(decryptedLines);
+							//get data from the new lines so we can then analyze them
+							decryptedDoc.runInitialFunctions();
+							//put the doc in the list of viewable docs
+							documents.push_back(decryptedDoc);
+							cout<<"Decrypted."<<endl;
+						break;
+						}
+					case 'c':
+						{
+							decryptloop=false;
+						break;
+						}
+					}//close switch
+					//output the document names as a header
+					cout<<divider1;
+					for (int i = 0; i < documents.size(); i++)
+					{
+						cout<< " " << documents.at(i).getName() << " ";
+					}
+					cout<<divider2;
+					
+				}while(decryptloop);
+				}
+				
 			break;
 
 			//exit
