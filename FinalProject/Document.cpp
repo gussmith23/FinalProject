@@ -826,3 +826,95 @@ void Document::wordTraceK(string* words, int k){
 	}
 
 }
+/*
+
+*/
+vector<Line> Document::caesar(int offset){
+
+	//the linearray to return
+	vector<Line> newLineArray = lineArray;
+
+	//we iterate for each line.
+	for(size_t i = 0; i < lineArray.size(); i++){
+		//the string representing the line of the doc we're ciphering
+		string line = lineArray.at(i).getStr();
+		
+		//for every char in the string...
+		for (int j = 0; j < line.size(); j++)
+		{
+			//continue if the char will break isalpha
+			if(!(line[j] >= -1 && line[j] <= 255)) continue;
+			//only cipher if isalpha
+			if(isalpha(line[j])){
+
+				bool mustResetToCapital = false;
+				//if the letter is capital, we must remember that
+				if(tolower(line[j])!=line[j]) mustResetToCapital = true;
+
+				//set it to lowercase (makes offsetting way easier
+				line[j] = tolower(line[j]);
+
+				//offset it, making sure that z+1 goes to a (and not the character after z, '(')
+				line[j] = (((line[j] - 'a') + offset)%26) + 'a';
+
+				//reset to capital
+				if(mustResetToCapital) line[j] = toupper(line[j]);
+			}
+
+		}
+
+		//replace the old line with the new one
+		newLineArray.at(i).setStr(line);
+
+
+	}
+
+	return newLineArray;
+
+}
+/*
+
+*/
+vector<Line> Document::vigenere(string key){
+
+	//the linearray to return
+	vector<Line> newLineArray = lineArray;
+
+	//we iterate for each line.
+	for(size_t i = 0; i < lineArray.size(); i++){
+		//the string representing the line of the doc we're ciphering
+		string line = lineArray.at(i).getStr();
+		
+		//for every char in the string...
+		for (int j = 0; j < line.size(); j++)
+		{
+			//continue if the char will break isalpha
+			if(!(line[j] >= -1 && line[j] <= 255)) continue;
+			//only cipher if isalpha
+			if(isalpha(line[j])){
+
+				bool mustResetToCapital = false;
+				//if the letter is capital, we must remember that
+				if(tolower(line[j])!=line[j]) mustResetToCapital = true;
+
+				//set it to lowercase (makes offsetting way easier
+				line[j] = tolower(line[j]);
+
+				//offset it, making sure that z+1 goes to a (and not the character after z, '(')
+				line[j] = (((line[j] - 'a') + (key[j%key.length()] - 'a'))%26) + 'a';
+
+				//reset to capital
+				if(mustResetToCapital) line[j] = toupper(line[j]);
+			}
+
+		}
+
+		//replace the old line with the new one
+		newLineArray.at(i).setStr(line);
+
+
+	}
+
+	return newLineArray;
+
+}

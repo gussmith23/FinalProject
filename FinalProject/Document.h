@@ -58,6 +58,11 @@ class Document{
 		void printTopKWord(int);
 		void printBottomKWord(int);
 		void wordTraceK(string*,int);
+		//ciphers
+		vector<Line> caesar(int);
+		vector<Line> vigenere(string);
+		//helper function
+		 void runInitialFunctions();
 
 	private:
 		int id;
@@ -72,7 +77,7 @@ class Document{
 		//the alpha chars in the document
 		vector<char> alphaCharArray;
 		//helper function
-		void defineVariables(); void runInitialFunctions();
+		void defineVariables();
 		//
 		std::string name;
 		//null terminated linked list with wordcounts and final chars

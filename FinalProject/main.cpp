@@ -348,8 +348,110 @@ int main(int argc, char* argv[]){
 				}
 			break;
 
-			//exit
+			//encrypt
 			case 5:
+				{
+				//check that the document is loaded...
+				if(documents.size() < 1){
+					cout<<"Please load two documents first.\n";
+					break;
+				}
+
+				//should we keep iterating?
+				bool encryptloop = true;
+
+				do{
+					
+					cout << "a. Caesar cipher\nb. Vigenere cipher\nc. Go back\n";
+					char analyzeInput = NULL;
+					cin >> analyzeInput;
+					switch(analyzeInput){
+					//caesar cipher
+					case 'a':
+						{
+							//get the document
+							cout<<"Which document would you like to encrypt?"<<endl;
+							string docToEncryptName;
+							cin >> docToEncryptName;
+							Document docToEncrypt = searchByName(docToEncryptName,documents);
+							//if we can't find it, return;
+							if(docToEncrypt.getId()==-1){
+								cout<<"Please choose a valid file."<<endl;
+								break;
+							}
+							//else, get the offset...
+							cout<<"What offset do you want to use?"<<endl;
+							int offset;
+							cin>>offset;
+							//we get the set of encrypted lines...
+							vector<Line> encryptedLines = docToEncrypt.caesar(offset);
+							//we create a new "encrypted" document...
+							Document encryptedDoc = Document(docToEncryptName + "_encrypted");
+							//set the line array of encrypted document to the encrypted lines
+							encryptedDoc.setLineArray(encryptedLines);
+							//get data from the new lines so we can then analyze them
+							encryptedDoc.runInitialFunctions();
+							//put the doc in the list of viewable docs
+							documents.push_back(encryptedDoc);
+							cout<<"Encrypted."<<endl;
+						break;
+						}
+					//vigenere cipher
+					case 'b':
+						{
+							//get the document
+							cout<<"Which document would you like to encrypt?"<<endl;
+							string docToEncryptName;
+							cin >> docToEncryptName;
+							Document docToEncrypt = searchByName(docToEncryptName,documents);
+							//if we can't find it, return;
+							if(docToEncrypt.getId()==-1){
+								cout<<"Please choose a valid file."<<endl;
+								break;
+							}
+							//else, get the keyword...
+							cout<<"What keyword do you want to use?"<<endl;
+							string key;
+							cin>>key;
+							//we get the set of encrypted lines...
+							vector<Line> encryptedLines = docToEncrypt.vigenere(key);
+							//we create a new "encrypted" document...
+							Document encryptedDoc = Document(docToEncryptName + "_encrypted");
+							//set the line array of encrypted document to the encrypted lines
+							encryptedDoc.setLineArray(encryptedLines);
+							//get data from the new lines so we can then analyze them
+							encryptedDoc.runInitialFunctions();
+							//put the doc in the list of viewable docs
+							documents.push_back(encryptedDoc);
+							cout<<"Encrypted."<<endl;
+						break;
+						}
+					case 'c':
+						{
+							encryptloop=false;
+						break;
+						}
+					}//close switch
+					//output the document names as a header
+					cout<<divider1;
+					for (int i = 0; i < documents.size(); i++)
+					{
+						cout<< " " << documents.at(i).getName() << " ";
+					}
+					cout<<divider2;
+					
+				}while(encryptloop);
+				}
+				
+			break;
+
+			//decrypt
+			case 6:
+				exit = true;
+			break;
+
+			//exit
+			case 7:
 				exit = true;
 			break;
 
