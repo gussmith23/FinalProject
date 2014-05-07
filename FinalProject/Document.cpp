@@ -1,3 +1,23 @@
+/*
+Gus Henry Smith
+
+Document.cpp
+
+The Document class definition file. Contains many of the most important
+functions in this program. Here is a list (excluding setters, getters,
+constructors, and helper functions):
+
+*loadDocument: loads and parses through a document.
+*outputDocument: outputs a document to a specified location.
+*parseWords and parseChar: parses words/chars in the document, storing them in lists
+*lineLengths: sets up a special linked list described below
+*reverseCompare: compares two documents using stacks of words
+*hashWords and hashChar: hashes words/chars in the document to hashtables contained in Document object
+*printAllChars, printAllCharsOffset, printTopKWord, printBottomKWord, wordTraceK: prints plots as described below
+*caesar, vigenere: caesar/vigenere encrypting
+*caesar_d, vigenere_d: caesar/vigenere decrypting
+*/
+
 //1-3 Document class (cpp file)
 #include <Document.h>
 #include <Metrics.h>
@@ -6,21 +26,34 @@
 
 using namespace std;
 using std::cout;
-//constructors and deconstructors
-//string name, random id
+
+/*
+CONSTRUCTORS AND DECONSTRUCTORS
+*/
+/*
+string name, random id
+*/
 Document::Document(string nameval){
 	name = nameval;
 	//we use a six-digit random number here
 	id = rand() % (999999 - 100000 + 1) + 100000;
 	defineVariables();
 }
-//string name, int id
+/*
+string name, int id
+*/
 Document::Document(string nameval, int idval){
 	name = nameval;
 	id = idval;
 	defineVariables();
 }
-//helper function to define all variables at once
+
+/*
+HELPER FUNCTIONS
+*/
+/*
+helper function to define all variables at once
+*/
 void Document::defineVariables(){
 	pWords = new Stack<string>();
 	wordcount = NULL;
@@ -28,6 +61,10 @@ void Document::defineVariables(){
 	hashLengthWords = 97;
 	hashLengthChars = 8;
 }
+/*
+runInitialFunctions calls all of the data-collection functions simultaneously,
+usually directly after a document is created.
+*/
 void Document::runInitialFunctions(){
 	cout<<"Building document:"<<endl;
 	cout<<"Parsing words...";
@@ -52,7 +89,9 @@ void Document::runInitialFunctions(){
 	linecount = lineArray.size();
 }
 
-//setters and getters
+/*
+SETTERS AND GETTERS
+*/
 int Document::getId() const{
 	return id;
 }
@@ -65,9 +104,10 @@ int Document::getLinecount() const{
 void Document::setLinecount(int linecountval){
 	linecount = linecountval;
 }
-/*1-6 Change the getWordCount getter in Document to do the following: if wordcount is not set,
-sum up the word counts for each line, set the value and return the value, else just return
-the value.*/
+/*
+getWordcount is not simply a passive getter - if the value is not set, then it 
+actively gets the value itself.
+*/
 int Document::getWordcount() {
 
 	//if wordcount not set...
@@ -91,14 +131,15 @@ int Document::getWordcount() {
 void Document::setWordcount(int wordcountval){
 	wordcount = wordcountval;
 }
-//returns a copy of the line array
 vector<Line> Document::getLineArray() const{
 	return vector<Line>(lineArray);
 }
 void Document::setLineArray(vector<Line> lineArrayval){
 	lineArray = lineArrayval;
 }
-//adds a line to the array
+/*
+addToLineArray adds a line to the array.
+*/
 void Document::addToLineArray(Line lineval){
 	lineArray.push_back(lineval);
 }
@@ -123,17 +164,33 @@ vector<string> Document::setWordArray() const{
 LineNode<int>* Document::getpLineLengthsLinkedList() const{
 	return pLineLengthsLinkedList;
 }
+Node<string>** Document::getHashTableWords() const {
+	return hashTableWords;
+}
+void Document::setHashTableWords(Node<string>** val){
+	Document::hashTableWords = val;
+}
+Node<char>** Document::getHashTableChar() const {
+	return hashTableChar;
+}
+void Document::setHashTableChar(Node<char>** val){
+	Document::hashTableChar = val;
+}
 
 
-//functions
-/*1-4 loaddocument function: 4. Add a function call loadDocument that takes the name of the file. 
-The function will read in the text file and create a new Line for each sentence read with Line id 
-	equal to the location in the text file. After, set the linecount.
-	My version of loadDocument returns 0 if it fails.*/
+/*
+FUNCTIONS
+*/
+/*
+loadDocument: Takes the filename as an argument. Reads in the text file and 
+creates a new Line for each sentence read with Line id equal to the location 
+in the text file. After, the function sets the linecount.
+My version of loadDocument returns 0 if it fails.
+*/
 int Document::loadDocument(string filename){
+	//using an ifstream to read in our file
 	ifstream filestream; 
 	filestream.open(filename, std::ifstream::in);
-
 	//if we failed to open our document
 	if(filestream.fail()){
 		cout<<"Document failed to open.\n";
@@ -141,7 +198,9 @@ int Document::loadDocument(string filename){
 		return 0;
 	}
 
-	/*now we iterate for every character in the stream.*/
+	/*
+	now we iterate for every character in the stream.
+	*/
 	//the line we'll be appending to
 	string line = "";
 	//the index, to track where we are
@@ -160,7 +219,7 @@ int Document::loadDocument(string filename){
 		//no matter what the file is, we append it to the current string.
 		line = line + c;
 
-		//now we check if we need to create a new line object.
+		//now we check if we need to create a new line object by checking for punctuation.
 		if ((c=='.')||(c=='!')||(c=='?')){
 			//if true, we create a new line object.
 			Line l = Line(line, index);
@@ -170,8 +229,6 @@ int Document::loadDocument(string filename){
 			line = "";
 			//we increase the linecount
 			linecount++;
-
-
 		}
 
 		//increase the index
@@ -198,14 +255,16 @@ int Document::loadDocument(string filename){
 	//must close the file
 	filestream.close();
 	
-	//now that the document is loaded, we can define our variables.
+	//now that the document is loaded, we can run our analysis functions
 	runInitialFunctions();
 
 	//return 1 if successful.
 	return 1;
 }
-/*Add a function outputDocument in Document that takes in a string and outputs the document to a 
-file at a location given by the string.*/
+/*
+outputDocument: takes in a string (filename) and outputs the document to a 
+file at a location given by the string.
+*/
 void Document::outputDocument(string filename){
 	ofstream file; 
 	file.open(filename);
@@ -215,11 +274,12 @@ void Document::outputDocument(string filename){
 		file << lineArray.at(i).getStr();
 	}
 }
-/*1-11 Create a function in Document called parseWords that returns an array of
-words (Similar to Line).*/
+/*
+parseWords: for each line, we pull all the words from the line. we add all those words into our
+central vector of ALL words in the document. This vector is then returned.
+*/
 vector<string> Document::parseWords(){
-	//all we need to do in this function is get all of the words from each line and return them.
-
+	
 	//the vector we return
 	vector<string> words;
 
@@ -237,12 +297,10 @@ vector<string> Document::parseWords(){
 			Document::pWords->push(wordsToAdd.at(j));
 		}
 	}
-
 	return words;
-
 }
-/*1-12 Create a function in Document called parseChar that returns an
-array of char (similar to Line).
+/*
+parseChar: returns an array of chars.
 This function takes a boolean representing whether or not we want ALL
 characters parsed, or only the letters.
 We want all characters parsed when we handle the ciphers; otherwise,
@@ -271,9 +329,8 @@ vector<char> Document::parseChar(bool onlyAlpha){
 	return chars;
 }
 /*
-2-3 The function should search through all the Lines. Each line will be a new node that 
-stores the word count of that line and the symbol that ended the sentence (., ?, !, etc).
-
+lineLengths: searches through all the Lines. Each line is a new node with word count
+and terminating symbol stored.
 this function has no return - it simply creates the linked list, setting 
 Document::pLineLengthsLinkedList equal to the head.
 */
@@ -296,11 +353,10 @@ void Document::lineLengths(){
 	pLineLengthsLinkedList = head;
 }
 /*
-2-5 reverseCompare
-Create a function called reverseCompare in Document that takes in a Document as 
-input. The function needs to create a stack of words in the calling document. Next 
-examine the words of the passed Document form the end to the beginning with those 
-words on the stack. If the words are different, cout different, else cout same.
+reverseCompare: takes in a Document. The function gets the stack of words from the
+Document in the argument and the calling document. It then pops off one word at
+a time and compares them. In the end, it outputs a count of the number of words that 
+are different.
 */
 void Document::reverseCompare(Document d){
 
@@ -350,7 +406,7 @@ void Document::reverseCompare(Document d){
 	std::cout << "End of comparison." << endl;
 }
 /*
-2-7 hashWords - hashes words into a hashtable.
+hashWords: hashes words into a hashtable using chaining.
 */
 void Document::hashWords(){
 	
@@ -414,7 +470,7 @@ void Document::hashWords(){
 	}
 }
 /*
-hashes chars.
+hashChar: hashes chars into a hashtable using chaining.
 */
 void Document::hashChar(){
 	
@@ -464,124 +520,8 @@ void Document::hashChar(){
 	
 	setHashTableChar(hashTableChar);
 }
-Node<string>** Document::getHashTableWords() const {
-	return hashTableWords;
-}
-void Document::setHashTableWords(Node<string>** val){
-	Document::hashTableWords = val;
-}
-Node<char>** Document::getHashTableChar() const {
-	return hashTableChar;
-}
-void Document::setHashTableChar(Node<char>** val){
-	Document::hashTableChar = val;
-}
 /*
-3-4 printParsedChars
-it firsts parses all chars into a hash table
-*/
-void Document::printParsedChars(){
-	
-	time_t c1 = clock();
-	
-	Metrics* m = new Metrics();
-	Plot* p = new Plot();
-
-	//we first set the hashlength to 1 and hash the chars...
-	int previousHashLength = hashLengthChars;
-	hashLengthChars = 1;
-	hashChar();
-	//this effectively gives us a linked-list of chars.
-
-	//we now sort the linked list.
-	//remember, the hash table's chains begin with a dummy node, so we use getNext...
-	Node<char>* head = m->mergeSortLinkedList(getHashTableChar()[0]->getNext());
-
-	//we find the length of the list.
-	int length = 1;
-	Node<char>* index = head;
-	while(index->getNext()!=nullptr){
-		length++;
-		index = index->getNext();
-	}
-
-	double* frequencies = new double[20];
-	char* symbols = new char[20];
-
-	//find the 10 first and final chars..
-	for(int i = 0; i < 10; i++){
-		
-		//the node near the start
-		Node<char>* beginning = Node<char>::get(i,head);
-		//the node near the end
-		Node<char>* end = Node<char>::get(length-1-i,head);
-
-		frequencies[i] = (double) beginning->getCount(); symbols[i] = beginning->getKey();
-		frequencies[i+10] = (double) end->getCount(); symbols[i+10] = end->getKey();
-		//cout<<symbols[i];
-
-	}
-	p->histogram(frequencies,symbols,20);
-
-	//reset hash length
-	hashLengthChars = previousHashLength;
-
-	//print time
-	cout<<((double)clock()-(double)c1)/CLOCKS_PER_SEC << " seconds to generate.\n";
-
-}
-void Document::printParsedCharsByFrequency(){
-	
-	time_t c1 = clock();
-	
-	Metrics* m = new Metrics();
-	Plot* p = new Plot();
-
-	//we first set the hashlength to 1 and hash the chars...
-	int previousHashLength = hashLengthChars;
-	hashLengthChars = 1;
-	hashChar();
-	//this effectively gives us a linked-list of chars.
-
-	//we now sort the linked list.
-	//remember, the hash table's chains begin with a dummy node, so we use getNext...
-	Node<char>* head = m->mergeSortLinkedListByCount(getHashTableChar()[0]->getNext());
-
-	//we find the length of the list.
-	int length = 1;
-	Node<char>* index = head;
-	while(index->getNext()!=nullptr){
-		length++;
-		index = index->getNext();
-	}
-
-	double* frequencies = new double[20];
-	char* symbols = new char[20];
-
-	//find the 10 first and final chars..
-	for(int i = 0; i < 10; i++){
-		
-		//the node near the start
-		Node<char>* beginning = Node<char>::get(i,head);
-		//the node near the end
-		Node<char>* end = Node<char>::get(length-1-i,head);
-
-		frequencies[i+10] = (double) beginning->getCount(); symbols[i+10] = beginning->getKey();
-		frequencies[i] = (double) end->getCount(); symbols[i] = end->getKey();
-		//cout<<symbols[i];
-
-	}
-	p->histogram(frequencies,symbols,20);
-
-	//reset hash length
-	hashLengthChars = previousHashLength;
-
-	//print time
-	cout<<((double)clock()-(double)c1)/CLOCKS_PER_SEC << " seconds to generate.\n";
-
-}
-/*
-Print letters a-z with frequencies.
+printAllChars: prints a histogram of the frequency of letters a-z.
 */
 void Document::printAllChars(){
 	
@@ -623,7 +563,9 @@ void Document::printAllChars(){
 	p.histogram(freq,symbols,26);
 }
 /*
-Print letters (offset)-z with frequencies.
+printAllCharsOffset: prints letters with frequencies.
+Takes an int, representing the offset. The offset determines which
+char of the alphabet we begin with - i.e. an offset of 1 begins at 'b'.
 */
 void Document::printAllCharsOffset(int offset){
 	
@@ -668,7 +610,7 @@ void Document::printAllCharsOffset(int offset){
 	p.histogram(freq,symbols,26-offset);
 }
 /*
-Top k word: prints the top k words, where k is some integer.
+printTopKWord: prints the top k words, where k is some integer.
 The function goes through each chain of the hash, compiling every node
 into one master list. It then merge sorts them by their count and pulls
 the first k elements from that list.
@@ -816,7 +758,7 @@ void Document::printBottomKWord(int k){
 
 }
 /*
-This function creates a plot, where for each point x represents first appearance
+wordTraceK: creates a plot, where for each point x represents first appearance
 of the word and y represents last appearance.
 x and y themselves will actually represent word number in the document divided by
 the average number of words per sentence.
@@ -873,7 +815,10 @@ void Document::wordTraceK(string* words, int k){
 
 }
 /*
-
+caesar: encrypts the document using a caesar cipher, which increments
+each char by a certain amount.
+NOTE: this function does NOT alter the document object. Instead, it returns
+a set of lines which can be used to construct an encrypted document object.
 */
 vector<Line> Document::caesar(int offset){
 
@@ -919,7 +864,10 @@ vector<Line> Document::caesar(int offset){
 
 }
 /*
-
+vigenere: encrypts the document using a vigenere cipher, which increments
+each char based on a keyword.
+NOTE: this function does NOT alter the document object. Instead, it returns
+a set of lines which can be used to construct an encrypted document object.
 */
 vector<Line> Document::vigenere(string key){
 
@@ -943,7 +891,7 @@ vector<Line> Document::vigenere(string key){
 				//if the letter is capital, we must remember that
 				if(tolower(line[j])!=line[j]) mustResetToCapital = true;
 
-				//set it to lowercase (makes offsetting way easier
+				//set it to lowercase (makes offsetting way easier)
 				line[j] = tolower(line[j]);
 
 				//offset it, making sure that z+1 goes to a (and not the character after z, '(')
@@ -965,7 +913,10 @@ vector<Line> Document::vigenere(string key){
 
 }
 /*
-
+caesar_d: deciphers a caesar-encrypted document, by decrementing each char 
+by some offset.
+NOTE: this function does NOT alter the document object. Instead, it returns
+a set of lines which can be used to construct an encrypted document object.
 */
 vector<Line> Document::caesar_d(int offset){
 
@@ -992,7 +943,7 @@ vector<Line> Document::caesar_d(int offset){
 				//set it to lowercase (makes offsetting way easier
 				line[j] = tolower(line[j]);
 
-				//offset it, making sure that z+1 goes to a (and not the character after z, '(')
+				//offset it, making sure that a-1 loops back to z.
 				line[j] = (((line[j] - 'a') - offset + 26)%26) + 'a';
 
 				//reset to capital
@@ -1011,7 +962,10 @@ vector<Line> Document::caesar_d(int offset){
 
 }
 /*
-
+vigenere_d: deciphers a vigenere-encrypted document, by performing the inverse
+operation which vigenere() performs.
+NOTE: this function does NOT alter the document object. Instead, it returns
+a set of lines which can be used to construct an encrypted document object.
 */
 vector<Line> Document::vigenere_d(string key){
 
@@ -1038,7 +992,7 @@ vector<Line> Document::vigenere_d(string key){
 				//set it to lowercase (makes offsetting way easier
 				line[j] = tolower(line[j]);
 
-				//offset it, making sure that z+1 goes to a (and not the character after z, '(')
+				//offset it, making sure that a-1 loops back to z.
 				line[j] = (((line[j] - 'a') - (key[j%key.length()] - 'a') + 26)%26) + 'a';
 
 				//reset to capital

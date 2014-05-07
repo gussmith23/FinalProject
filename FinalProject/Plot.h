@@ -1,5 +1,16 @@
-/*1-13 Create a Class called Plot. Private: int id, array of string xlabel, 
-array of string ylabels, int numPoints. Make the correct setters and getters.*/
+/*
+Gus Henry Smith
+
+Plot.h
+
+The Plot class contains numerous utilities used in plotting data. 
+For more information on the specific functions, look in Plot.cpp.
+
+The functioning of the Plot class depends on the CONSOLE_SCREEN_BUFFER_INFO
+object, which is a Windows-only construct. This object represents 
+the console, and is used to determine placement of points, the si-
+ze of the graph, etc.
+*/
 #include <vector>
 #include <string>
 #include <Windows.h>
@@ -27,8 +38,6 @@ class Plot{
 		void setNumPoints(int);
 
 		//functions
-		//1-14
-		void plot2D(double*,double*,int);
 		//2-1 scaling plot function
 		void plot2DScale(double*,double*,char*,int);
 		//2-4 histogram - takes array of frequencies and length of array

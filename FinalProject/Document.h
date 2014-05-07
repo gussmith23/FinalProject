@@ -1,4 +1,30 @@
-//1-3 Document class (header file)
+/*
+Gus Henry Smith
+
+Document.h
+
+The document header file declares all aspects of the Document class.
+An instance of a document class represents a single document. It contains
+all of the info drawn from that document, including line count, word
+count, and character count.
+A Document object also includes more complex fields, which I will explain now.
+*lineArray, wordArray, charArray, and alphaCharArray:
+	vector lists of important data. lineArray carries a list of Line objects. word-
+	Array is simply a list of strings. charArray and alphaCharArray include all 
+	chars (though alphaCharArray is just the letters)
+*pLineLengthsLinkedList
+	A pointer to the head of a linked list whose nodes each represent a line. More
+	detail in the LineNode.h file.
+*pWords
+	A pointer to a stack object containing all words in the document; used to com-
+	are two documents.
+*hashTableWords and hashTableChars
+	Double pointers representing the hash tables for the words and chars contained
+	in the document.
+*/
+
+
+
 #include <Line.h>
 #include <string>
 #include <vector>
@@ -51,7 +77,7 @@ class Document{
 		//2-7 hashWords();
 		void hashWords();
 		void hashChar();
-		//3-4
+		//Graphing functions for "analyze" menu
 		void printParsedChars();
 		void printParsedCharsByFrequency();
 		void printAllChars();
@@ -65,7 +91,7 @@ class Document{
 		//deciphers
 		vector<Line> caesar_d(int);
 		vector<Line> vigenere_d(string);
-		//helper function
+		//helper function - collect data from the document
 		 void runInitialFunctions();
 
 	private:

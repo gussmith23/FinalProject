@@ -1,3 +1,14 @@
+/*
+Gus Henry Smith
+
+Line.h
+
+The Line class represents a single line in the document. Each
+Line object contains a string holding the sentence which it
+represents. Also included are the wordcount and charcount for 
+the line.
+*/
+
 //1-2 creating class line (header file)
 #include <string>
 #include <vector>

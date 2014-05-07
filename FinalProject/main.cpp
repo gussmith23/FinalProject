@@ -1,7 +1,17 @@
 /*
-Current status: 
-fix sorts(3-1) implement node not array
-check updated hash (3-2) (i think it's done)
+Gus Henry Smith
+
+main.cpp
+
+The main file for the program. Contains all of the code to display the main
+menu and submenus. 
+The only significant functions/data handled in this file relate to the array
+of Document objects which the program keeps track of. In the vector called
+"documents", we keep a list of documents which either the user has loaded, or
+the program has created (after encrypting/decrypting). There is also a funct-
+ion searchByName which searches through this array of documents for a document
+matching the name given. This is used when the user inputs what document they
+are trying to output/analyze/encrypt/decrypt/compare.
 */
 
 #include <cstdio>
@@ -22,8 +32,6 @@ int main(int argc, char* argv[]){
 	int userArg = NULL;
 	//to exit the program, this needs to be switched
 	bool exit = false;
-	//the welcome statement
-	cout << "Welcome!\n";
 	//the document loaded - begins as a dummy
 	Document d =  Document("No Document Loaded",-1);
 	//the exit bool for the parse submenu
@@ -33,12 +41,15 @@ int main(int argc, char* argv[]){
 	//the divider used to separate the console
 	string divider2 = "<-------\n";
 	string divider1 = "\n------->";
-
+	//the welcome statement
+	cout << "Welcome!\n";
+	
 	//1-1: main function switch
 	do{
-		//menu selection
+		//The list of available options
 		cout << "Please make a selection:\n1. Load document\n2. Output document\n3. Analyze document\n4. Compare two documents\n5. Encrypt\n6. Decrypt\n7. Exit\n";
-		//resetting....
+		
+		//resetting the inputted arg
 		userArg = NULL;
 		cin >> userArg;
 
@@ -46,6 +57,7 @@ int main(int argc, char* argv[]){
 			//load document
 			case 1:
 				{
+					//getting user input...
 					cout<<"Please enter the filename of the document.\n";
 					cin >> loadDocumentInput;
 					cout<<"Give the file a name:\n";
@@ -56,13 +68,11 @@ int main(int argc, char* argv[]){
 					documentToLoad.setName(docName);
 					//load the document and check if it passes
 					if(documentToLoad.loadDocument(loadDocumentInput)){
-						//if it passes...
-						documents.push_back(documentToLoad);
-
-						//YOU CAN PUT DEBUG STUFF HERE
-												
+						//if it passes, add it to the list of active documents
+						documents.push_back(documentToLoad);												
 					}
 					else{
+						//else, the document failed
 						cout << "Document load failed.\n";
 					}
 
@@ -77,7 +87,7 @@ int main(int argc, char* argv[]){
 						cout<<"Please load a document first.\n";
 						break;
 					}
-
+					//getting user info...
 					string docToOutputName;
 					cout<<"Please enter the name of the file you'd like to output.\n";
 					cin >> docToOutputName;
@@ -87,73 +97,15 @@ int main(int argc, char* argv[]){
 						cout << "Please input a valid file." <<endl;
 						break;
 					}
-
-					//now we take in the output file name.
+					//now that we know there's a valid document to output, we take in the desired output file name.
 					string outputDocumentInput;
 					cout<<"Please enter the desired name of the output file.\n";
 					cin >> outputDocumentInput;
+					//call the output function
 					docToOutput.outputDocument(outputDocumentInput);
 				}
 			break;
-
-			//parse document REMOVE
-			case 1000: 
-				{
-				//first we check that the document is loaded...
-				if(documents.size() < 1){
-					cout<<"Please load a document first.\n";
-					break;
-				}
-
-				//creating a submenu for parse
-				do{
-					cout << "a. Parse characters\nb. Parse words\nc. Get word count\nd. Get line count\ne. Go back\n";
-					char parseInput = NULL;
-					cin >> parseInput;
-					switch(parseInput){
-					//parsechar
-					case 'a':
-						{
-							cout << "Number of letters: " << d.getAlphaCharArray().size() << endl;
-							cout << "Total number of characters: " << d.getCharArray().size() << endl;
-						}
-						break;
-					//parse words
-					case 'b':
-						{
-							vector<string> vec = d.parseWords();
-							cout << "Array of strings returned.\nLength: " << vec.size() << endl;
-						}
-						break;
-					//wordcount
-					case 'c':
-						{
-							cout<< "Wordcount: " << d.getWordcount() << endl;
-						}
-						break;
-					//linecount
-					case 'd':
-						{
-							cout<<"Linecount: " << d.getLinecount() << endl;
-						}
-						break;
-					//exit
-					case 'e':
-						doParseLoop = false;
-						break;
-					default:
-						cout<<"Please make a valid selection\n";
-						break;
-					}
-
-					cout<<divider1<<d.getName()<<divider2;
-				}while(doParseLoop);
-
-				doParseLoop = true;
-				
-				}
-			break;
-
+			
 			//analyze document
 			case 3:
 				{
@@ -162,6 +114,11 @@ int main(int argc, char* argv[]){
 					cout<<"Please load a document first.\n";
 					break;
 				}
+
+				/*
+				Here, we ask them for the document that they want to analyze BEFORE they choose
+				an item from the submenu. It is simply more effective to run this section this way.
+				*/
 
 				//get the document they want to use
 				string docToAnalyzeName;
@@ -178,22 +135,28 @@ int main(int argc, char* argv[]){
 				bool analyzeLoop = true;
 
 				do{
-					cout << "a. Print character counts\nb. Print word count\nc. Print sentence count\nd. Print histogram of all chars\ne. Print histogram of all chars, offset\nf. Print histogram of top k words\ng. Print histogram of bottom k words\nh. Print word trace\ni. Go back\n";
+					//display the submenu, which is pretty long for the analyze option
+					cout << "a. Print character counts\nb. Print word count\nc. Print sentence count\nd. Print histogram of all chars\ne. Print histogram of all chars, offset\nf. Print histogram of top k words\ng. Print histogram of bottom k words (with top word included for reference)\nh. Print word trace\ni. Go back\n";
 					char analyzeInput = NULL;
 					cin >> analyzeInput;
 					Plot p = Plot();
 					switch(analyzeInput){
+					//character counts
 					case 'a':
 						{
+							//output number of alpha chars
 							cout << "Number of letters: " << docToAnalyze.getAlphaCharArray().size() << endl;
+							//output number of chars total
 							cout << "Total number of characters: " << docToAnalyze.getCharArray().size() << endl;
 						}
 						break;
+					//wordcount
 					case'b':
 						{
 							cout<< "Word count: " << docToAnalyze.getWordcount() << endl;
 						}
 						break;
+					//line/sentence count
 					case'c':
 						{
 							cout<<"Sentence count: " << docToAnalyze.getLinecount() << endl;
@@ -207,7 +170,7 @@ int main(int argc, char* argv[]){
 						}
 						break;
 
-					//histogram offset
+					//histogram with offset
 					case 'e':
 						{
 							cout<<"Enter character offset:"<<endl;
@@ -251,10 +214,7 @@ int main(int argc, char* argv[]){
 
 						}
 						break;
-
-
-
-
+					//exit
 					case 'i':
 						{
 							analyzeLoop = false;
@@ -271,10 +231,10 @@ int main(int argc, char* argv[]){
 				}while(analyzeLoop);
 				}
 			break;
-
+			//compare two documents
 			case 4:
 				{
-				//first we check that the document is loaded...
+				//first we check that two documents are loaded...
 				if(documents.size() < 2){
 					cout<<"Please load two documents first.\n";
 					break;
@@ -295,7 +255,7 @@ int main(int argc, char* argv[]){
 					case 'a':
 						{
 							bool valid = false;
-							
+							//until we get a valid document
 							while(!valid){
 								cout<<"Input document 1's name:"<<endl;
 								string doc1name;
@@ -307,6 +267,7 @@ int main(int argc, char* argv[]){
 
 							valid = false;
 
+							//until we get a valid document
 							while(!valid){
 								cout<<"Input document 2's name:"<<endl;
 								string doc2name;
@@ -321,6 +282,7 @@ int main(int argc, char* argv[]){
 					//clear
 					case 'b':
 						{
+							//simply reset both documents
 							doc1 = Document("",-1);
 							doc2 = Document("",-1);
 							cout << "Documents cleared." << endl;
@@ -363,7 +325,7 @@ int main(int argc, char* argv[]){
 				bool encryptloop = true;
 
 				do{
-					
+					//encrypting options
 					cout << "a. Caesar cipher\nb. Vigenere cipher\nc. Go back\n";
 					char analyzeInput = NULL;
 					cin >> analyzeInput;
@@ -391,7 +353,7 @@ int main(int argc, char* argv[]){
 							Document encryptedDoc = Document(docToEncryptName + "_c_en");
 							//set the line array of encrypted document to the encrypted lines
 							encryptedDoc.setLineArray(encryptedLines);
-							//get data from the new lines so we can then analyze them
+							//so we can analyze the document later, we run all of our analysis functions on the newly created encrypted doc
 							encryptedDoc.runInitialFunctions();
 							//put the doc in the list of viewable docs
 							documents.push_back(encryptedDoc);
@@ -460,7 +422,6 @@ int main(int argc, char* argv[]){
 				bool decryptloop = true;
 
 				do{
-					
 					cout << "a. Caesar decipher\nb. Vigenere decipher\nc. Go back\n";
 					char analyzeInput = NULL;
 					cin >> analyzeInput;
@@ -566,6 +527,14 @@ int main(int argc, char* argv[]){
 
 }
 
+
+/*
+searchByName simply does a linear search through the vector of documents
+to find the document specified. If no document is found, a document with
+ID -1 is returned (which the program can then check for).
+A linear search is justified, because the list of documents will never be
+exceedingly long.
+*/
 Document searchByName(string docName,vector<Document> docs){
 	//for every document...
 	for(int i = 0; i<docs.size(); i++){

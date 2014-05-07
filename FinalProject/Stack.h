@@ -1,3 +1,18 @@
+/*
+Gus Henry Smith
+
+Stack.h
+
+The Stack class defines a Stack data type, which is useful when we
+compare two documents.
+
+Stack includes the following functions:
+*push and pop: the two functions which define the Stack abstract data type. Pop removes a value
+	from the list at the top, while push adds it to the list at the top.
+*copyStack: returns a new stack object which is simply a duplicate of the argument Stack
+*getHead: returns the head of the stack
+*/
+
 #ifndef STACK_H
 #define STACK_H
 #include <Node.h>
@@ -18,6 +33,9 @@ private:
 	//the first Node in the stack
 	Node<T>* head;
 };
+/*
+CONSTRUCTORS AND DECONSTRUCTORS
+*/
 /* Stack constructor creates a new node with given 
 value.*/
 template<class T>
@@ -32,6 +50,13 @@ Stack<T>::Stack(){
 }
 /* push puts new node on the stack, and returns the
 new head.*/
+
+/*
+FUNCTIONS
+*/
+/*
+push: pushes value onto the stack, returning the new head of the stack.
+*/
 template<class T>
 Node<T>* Stack<T>::push(T value){
 	//create node with given value
@@ -50,7 +75,9 @@ Node<T>* Stack<T>::push(T value){
 	}
 	return head;
 }
-/* pop value from top of stack. returns the value. */
+/*
+pop: pops value from top of stack. returns the value.
+*/
 template<class T>
 T Stack<T>::pop(){
 	//return null for a null head
@@ -62,8 +89,7 @@ T Stack<T>::pop(){
 	return oldHead->getKey();
 }
 /*
-copy function
-debug - this is NOT good for memory. it's making 2 unneeded stacks each time.
+copyStack: copys the passed stack and returns the new stack object.
 */
 template<class T>
 Stack<T>* Stack<T>::copyStack(Stack<T>* toCopy){
@@ -83,6 +109,10 @@ Stack<T>* Stack<T>::copyStack(Stack<T>* toCopy){
 	}
 	return returnCopy;
 }
+
+/*
+GETTERS AND SETTERS
+*/
 template<class T>
 Node<T>* Stack<T>::getHead() const{
 	return head;

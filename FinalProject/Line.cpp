@@ -1,8 +1,22 @@
+/*
+Gus Henry Smith
+
+Line.cpp
+
+The line class includes the functions:
+*parseWords: runs through the string and collects all words in the line.
+*parseChar: runs through the string (or a set of inputted strings) and returns all characters.
+*getPunctuation: returns the terminating character of the line.
+*/
+
 #include <Line.h> 
 #include <iostream>
 
 using namespace std;
 
+/*
+CONSTRUCTORS AND DECONSTRUCTORS
+*/
 //sets id to random number
 Line::Line(){
 	//we use a six-digit random number here
@@ -33,7 +47,9 @@ Line::~Line(){
 	str.clear();
 }
 
-
+/*
+SETTERS AND GETTERS
+*/
 void Line::setStr(std::string strval){
 	str = strval;
 }
@@ -43,8 +59,9 @@ std::string Line::getStr() const{
 void Line::setWordcount(int wordcountval){
 	wordcount = wordcountval;
 }
-/*1-5 Change the getWordCount getter in Line to do the following: if wordcount is not set, 
-count the words in the sentence, set the value, and return the value, else just return the value.*/
+/*
+getWordCount: if wordcount is not set, it finds the wordcount itself and sets the value.
+*/
 int Line::getWordcount(){
 	
 	//if the wordcount isn't set..
@@ -105,9 +122,13 @@ int Line::getCharcount() const{
 	return charcount;
 }
 
-//functions
-/*1-8 Create a function in Line called parseWords that returns an array of strings containing 
-words for the Line.*/
+/*
+FUNCTIONS
+*/
+/*
+parseWords: parses through each character, determining where the beginning
+and end of each word is and storing those words in a vector of strings.
+*/
 vector<string> Line::parseWords(){
 	//the words
 	vector<string> words;
@@ -137,8 +158,10 @@ vector<string> Line::parseWords(){
 
 	return words;
 }
-/*1-9 Create a function in Line called parseChar that takes in value and returns an
-array of chars. This array should be filled with the characters from the Line.*/
+/*
+parseChar: simply returns an array of chars filled with the 
+characters from the line.
+*/
 vector<char> Line::parseChar(){
 	//the vector to return - it has one element for each char in the string.
 	vector<char> charArray;
@@ -149,8 +172,10 @@ vector<char> Line::parseChar(){
 
 	return charArray;
 }
-/*1-10 Overload parseChar to now take an array of strings and returns and array of
-char based on the array of strings given.*/
+/*
+parseChar: overloaded to take an array of strings.
+Returns array of chars of all chars in the strings given.
+*/
 vector<char> Line::parseChar(string* stringArray, int length){
 	//we'll dump all chars here 
 	vector<char> charVector;
@@ -169,6 +194,8 @@ vector<char> Line::parseChar(string* stringArray, int length){
 	return charVector;
 }
 /*
+getPunctuation: finds the punctuation symbol near or at the end of 
+this line's string object. If no punctuation is found, returns a period.
 */
 char Line::getPunctuation(){
 	//we search for the punctuation from the back of the string to the front.

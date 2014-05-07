@@ -1,124 +1,43 @@
+/*
+Gus Henry Smith
+
+Plot.cpp
+
+The Plot class definition includes many complex functions:
+*updateCsbi: updates the object representing the console window which we print to.
+*plot2DScale: a scaling plot function.
+*histogram: creates a histogram from a set of data.
+*plotPoint: plots a point using a custom symbol.
+*createAxis, numberAxes, setGraphMaxValues, ruling and marking functions, numberX/YAxis:
+	Functions that create the axis which we will plot upon.
+*translateX/Y: translates a value to a coordinate value relative to the graph we've created
+	inside the console window.
+*/
+
 #include <Plot.h>
 #include <cmath>
 #include <iostream>
 
 using namespace std;
 
+/*
+CONSTRUCTORS AND DECONSTRUCTORS
+*/
 Plot::Plot(){
 	//setting heightBuffer
 	heightBuffer = 6;
 
 	updateCsbi();
 }
-void Plot::plot2D(double* x, double* y, int length){
-	string xLabel = "x-axis";
-	string yLabel = "y-axis";
-	
-	//info on CSBI class from stackoverflow and MSDN
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo (GetStdHandle (STD_OUTPUT_HANDLE), &csbi);
-	//getting the height and the width of the screen.
-	//subtracting from the height because that's just how the size works out for me right now. not an exact science...or it is, but i don't want to bother.
-	int height = abs(csbi.srWindow.Top-csbi.srWindow.Bottom) - 3;
-	int width = abs(csbi.srWindow.Left-csbi.srWindow.Right);
 
-	//so we need to plot this point.
-	/* the structure is as follows: the leftmost column is blank, reserved for the y axis label. 
-	the bottom row is also blank, reserved for the x axis label. axes borders defined by _ and |.*/
-
-	//we have one string for each line.
-	string* screen = new string[height];
-	
-	
-	//we initialize each string
-	for(int i = 0; i < height; i++){
-		screen[i] = "";
-		for(int j = 0; j < width; j++){
-			screen[i] = screen[i] + " ";
-		}
-	}
-	//we build the vertical axis.
-	for(int i = 0; i < height-1; i++){
-		screen[i][1] = '|';
-	}
-	//we build the horizontal axis.
-	for(int i = 1; i < width; i++){
-		screen[height-2][i] = '-';
-	}
-	//we label the x axis.
-	for(size_t i = 0; i < xLabel.size(); i++){
-		screen[height-1][i+2] = xLabel[i];
-	}
-	//we label the y axis.
-	for(size_t i = 0; i < yLabel.size(); i++){
-		screen[i+2][0] = yLabel[i];
-	}
-	
-	//we number the x-axis
-	for(int i = 0; 5*i + 1< width; i++){
-		int xActual = 5*i + 1;
-		//if 5*i is greater than 10, we'll need 2 spots.
-		if(5*i>=10){
-			char* c = new char[2];
-			itoa((5*i),c,10);
-			screen[height-2][xActual] = c[1];
-			screen[height-2][xActual-1] = c[0];
-		}
-		else{
-			char* c = new char[1];
-			itoa(5*i,c,10);
-			screen[height-2][xActual] = c[0];
-		}
-	}
-	//we number the y-axis
-	for(int i = 0; 5*i + 1< height; i++){
-		int yActual = height - 2 - 5*i;
-		//if 5*i is greater than 10, we'll need 2 spots.
-		if(5*i>=10){
-			char* c = new char[2];
-			itoa((5*i),c,10);
-			screen[yActual-1][1] = c[0];
-			screen[yActual][1] = c[1];
-		}
-		else{
-			char* c = new char[1];
-			itoa(5*i,c,10);
-			screen[yActual][1] = c[0];
-		}
-	}
-
-	//we plot the point. we have to consider how this actually works, now.
-	/*coordinate systems measure up and to the right as positive, while this string system measures down
-	and to the right as positive. thus our (0,0) is technically at (1,height-2). we can translate our 
-	coordinates as follows - xActual = xGiven + 1, yActual = (height-2) - yGiven*/
-	
-	
-	//to plot the point, we find the right string and the right char.
-	//we have to iterate through each point and plot them individually.
-	for(int i = 0; i < length;i++){
-
-		//continuing if the coordinates are out of range.
-		if((y[i]>height-2)||(x[i]>width-2)){
-			continue;
-		}
-
-		int xActual = x[i]+1;
-		int yActual = (height - 2) - y[i];
-		screen[yActual][xActual]='*';
-	}
-
-	//we output everything.
-	for(int i = 0; i< height; i++){
-		cout << screen[i] <<endl;
-	}
-}
 /*
-2-1
+FUNCTIONS
+*/
+/*
+plot2DScale:
 A scaling plot function.
 As we can use drawAxis to draw the axis on-screen, all this function needs to do is number the axes and then 
 draw the points accordingly.
-Current status:
-numberAxes
 */
 void Plot::plot2DScale(double* x, double* y, char* symbols, int length){
 	
@@ -151,7 +70,7 @@ void Plot::plot2DScale(double* x, double* y, char* symbols, int length){
 	redraw();
 }
 /*
-a function that creates the axis. note: you must use redraw() to actually draw the axis.
+createAxis: a function that creates the axis. note: you must use redraw() to actually draw the axis.
 */
 void Plot::createAxis(){
 	string xLabel = "x-axis";
@@ -198,7 +117,7 @@ void Plot::createAxis(){
 	}
 }
 /*
-the function which numbers the axes.
+numberAxes: the function which numbers the axes.
 
 we start at increment, and increase by increment as long as we're less than or equal to the graph's max 
 val, which is a multiple of increment. for each iteration of the loop, we put the numbers on 
@@ -254,7 +173,7 @@ void Plot::numberAxes(){
 
 }
 /*
-a function which simply outputs everything to the screen.
+redraw: a function which simply outputs everything to the screen. 
 */
 void Plot::redraw(){
 	//we output everything.
@@ -263,7 +182,8 @@ void Plot::redraw(){
 	}
 }
 /*
-a simple max function
+findmax: a simple linear max function which we use to find the maximum values
+in any given set of data.
 */
 double Plot::findMax(double* values, int length){
 	double max = 0.0;
@@ -274,18 +194,21 @@ double Plot::findMax(double* values, int length){
 	return max;
 }
 /*
-update the object which represents the console window. this should be run liberally.
+updateCsbi:
+This function updates the object which represents the console window. THIS IS WINDOWS-BASED ONLY.
+This function should be run liberally, as we want to keep an up-to-date measurement of the window
+in case the window was resized.
 */
 void Plot::updateCsbi(){
-	GetConsoleScreenBufferInfo (GetStdHandle (STD_OUTPUT_HANDLE), &(Plot::csbi));
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &(Plot::csbi));
 }
 /*
+translateX/translateY:
 takes a double, and returns at what position RELATIVE TO THE AXIS the item should be placed, given 
 current state of Plot values. note: this doesn't give the absolute position in the screen array.
 
-so we have the graphHeight/Width and the graphMaxX/Y. so (inputX/graphMaxX)*graphWidth
-should give the right distance along the x axis. 
-
+We have the graphHeight/Width and the graphMaxX/Y. so (inputX/graphMaxX)*graphWidth
+should give the right distance along the x axis, for example.
 */
 int Plot::translateX(double x){
 	return floor((x/graphMaxX)*graphWidth);
@@ -294,12 +217,13 @@ int Plot::translateY(double y){
 	return floor((y/graphMaxY)*graphHeight);
 }
 /*
-this function takes the max values in the set, and uses that information in combination
-with the current state of the Plot object to determine the max values present on the graph.
+setGraphMaxValues:
+This function takes the max values in the set, and uses that information in combination
+with the current state of the CSBI object to determine the max values present on the graph.
 
-basically what will happen is this:
-we will ceiling the double. then we'll run a while loop on it, incrementing it until it is
-evenly divisible by increment. the number it increments to is the graph's max val.
+Basically what will happen is this:
+We will ceiling the double. then we'll run a while loop on it, incrementing it until it is
+evenly divisible by the x or y increment. The number it increments to is the graph's max value.
 */
 void Plot::setGraphMaxValues(double maxX,double maxY,int xincrement,int yincrement){
 	Plot::xincrement = xincrement;
@@ -321,12 +245,15 @@ void Plot::setGraphMaxValues(double maxX,double maxY,int xincrement,int yincreme
 	
 }
 /*
+plotPoint:
+Plots a single point on the graph using the inputted char to represent the point.
 */
 void Plot::plotPoint(double x, double y,char symbol){
 	screen[height - translateY(y) - 1 - 1][translateX(x)+1] = symbol;
 }
 /*
-the following functions build the ruler on the screen.
+rulehoriz/markhoriz/rulevert/markvert:
+These recursive functions build a ruler on the plot, on both the x and y axes.
 */
 void Plot::rulehoriz(int l, int r, int h){
 	//this is simply a recursion which divides the screen into sections, indicating each time
@@ -361,9 +288,8 @@ void Plot::markvert(int loc, int h){
 
 }
 /*
-2-4 histogram:
-Create a function in Plot class called histogram. This function should create a histogram
-based on a given array of frequencies.
+histogram:
+Creates a histogram based on a given array of frequencies.
 the way this function works is as follows:
 1. axes created.
 2. max frequency found -> set graph max values
@@ -411,7 +337,9 @@ void Plot::histogram(double* frequencies,char* symbols,int length){
 	redraw();
 }
 /*
+histogram:
 This histogram function plots frequencies, but then prints the corresponding string above the column.
+Used for the topK/bottomKWord functions.
 */
 void Plot::histogram(double* frequencies,string* words,int length){
 	
@@ -462,9 +390,10 @@ void Plot::histogram(double* frequencies,string* words,int length){
 	//finally, draw 
 	redraw();
 }
-
 /*
-in the next two functions, we're simply separating the numberAxes function
+numberX/YAxis:
+The next functions number their respective axes. The override of numberXAxis
+uses symbols from the array given instead of numbers.
 */
 void Plot::numberXAxis(){
 	//x axis

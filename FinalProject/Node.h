@@ -1,15 +1,31 @@
+/*
+Gus Henry Smith
+
+Node.h
+
+The Node class defintion defines a simple Node to be used in Linked Lists.
+The class is templated to take any type of value in its "key" field. Beca-
+use it is templated, all of its functions must be defined in the header.
+
+The Node class includes two very crucial functions:
+*moveTo: moves a Node to the specified index relative to the head of the list
+*get: gets the node at an index relative to the head of the list
+*/
+
 #ifndef NODE_H
 #define NODE_H
 template<class T>
 class Node{
 	public:
+		//constructors
 		Node();
 		Node(T);
-
+		
+		//setters and getters
 		Node<T>* getNext() const;
 		void setNext(Node<T>*);
-		Node<T>* getPrev() const; //new
-		void setPrev(Node<T>*); //new
+		Node<T>* getPrev() const; 
+		void setPrev(Node<T>*); 
 		T getKey() const;
 		void setKey(T);
 		int getCount() const;
@@ -20,9 +36,13 @@ class Node{
 		void setLast(int);
 
 		//moves to index
-		Node<T>* moveTo(int,Node<T>*); //new
-
-		//takes the head of the list and the desired index.
+		Node<T>* moveTo(int,Node<T>*); 
+		/*
+		NOTE: THIS MUST BE DEFINED HERE, OR THE COMPILATION THROWS LINKER ERRORS
+		get: takes the head of the list, and the index of the Node we desire.
+		Returns the node at that index, or nullptr if we go out of the bounds
+		of the list.
+		*/
 		template<class T>
 		static Node<T>* get(int index, Node<T>* head){
 			Node<T>* n = head;
@@ -33,15 +53,18 @@ class Node{
 		return n;
 		}
 
-		protected:
+	protected:
 		T key;
 		Node<T>* next;
 		Node<T>* prev;
 		int count;
-		//for word trace
-		int first;
-		int last;
+		//for word trace: keeps the first and last occurence of the word
+		int first; int last;
 };
+
+/*
+CONSTRUCTORS
+*/
 template<class T>
 Node<T>::Node(T key){
 	Node<T>::key = key;
@@ -60,6 +83,10 @@ Node<T>::Node(){
 	first = NULL;
 	last = NULL;
 }
+
+/*
+SETTERS AND GETTERS
+*/
 template<class T>
 Node<T>* Node<T>::getNext() const{
 	return next;
@@ -109,7 +136,14 @@ void Node<T>::setLast(int val){
 	last = val;
 }
 
-//takes the head of the list and the desired index.
+/*
+FUNCTIONS
+*/
+/*
+moveTo: takes the head of the list and the desired index which we want to move
+this Node to. Returns the new head of the list, with the node inserted at the
+correct point.
+*/
 template<class T>
 Node<T>* Node<T>::moveTo(int index, Node<T>* head){
 	//if it's to be the new head

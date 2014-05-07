@@ -1,3 +1,31 @@
+/*
+Gus Henry Smith
+
+Metrics.h
+
+The Metrics class contains just that - metrics tools. included are all 
+sorts, used to sort both arrays and linked lists.
+As it is a templated class, all functions must be defined in the header.
+
+Metrics includes a heirarchy of sorts:
+1. Sorts for arrays
+	a. selectionSort
+	b. insertionSort
+2. Sorts for linked lists
+	a. Sorts which sort by the Node's key
+		i. insertionSortLinkedList
+		ii. mergeSortLinkedListByCount	
+	b. Sorts which sort by the Node's "count" field
+		(used to order a list of nodes by the frequency of the nodes)
+		i. insertionSortLinkedListByCount
+		ii. mergeSortLinkedListByCount
+
+Metrics also includes some helper functions:
+*sortRecursion/sortRecursionByCount: The recursive portion of the merge sort functions.
+*lessThan/equals: general functions which are able to compare ints, chars, and strings 
+
+*/
+
 #include <typeinfo>
 #include <string>
 #include <sstream>
@@ -8,7 +36,10 @@ class Metrics{
 private:
 	int id;
 	/*
-	PLEASE NOTE that the following two functions break if passed
+	THIS FUNCTION MUST BE DEFINED HERE, OTHERWISE THE PROGRAM THROWS LINKER ERRORS.
+	
+	lessThan: A generalized function for comparing objects. Can compare strings, chars, and ints.
+	PLEASE NOTE that the following function breaks if passed
 	anything other than a char, int, or string.
 	*/
 	template<class T> bool lessThan(T item1,T item2){
@@ -30,21 +61,14 @@ private:
 			return string1.compare(string2)<0;
 		}
 	}
-	template<class T> bool greaterThan(T item1,T item2){
-		string type = typeid(T).name();
-		if(type.compare("int")==0||type.compare("char")==0){
-			return item1 > item2;
-		}else{
-			stringstream ss1;
-			ss1 << item1;
-			stringstream ss2;
-			ss2 << item2;
-			return ss1.str().compare(ss2.str())<0;
-		}
-	}
 public:
 	
-	//an equality function which covers cases when strings are equivalent but their cases are not
+	/*
+	THIS FUNCTION MUST BE DEFINED HERE, OTHERWISE THE PROGRAM THROWS LINKER ERRORS.
+
+	equals: a generalized equality function for strings, ints and chars. this function
+	covers cases when strings are equivalent, but their cases are not.
+	*/
 	template<class T> static bool equals(T item1,T item2){
 		string type = typeid(T).name();
 		if(type.compare("int")==0||type.compare("char")==0){
@@ -71,7 +95,11 @@ public:
 	3-1 templated sorts for int, char, and string. I have sorts for both arrays and linked lists.
 	*/
 
-	/* SORTS FOR ARRAYS */
+	/* 
+	SORTS FOR ARRAYS:
+	Includes a selection insertion, and merge sort, which take the array of vars (int, char, or string)
+	and a left/right index.
+	*/
 	template<class T>
 	void selectionSort(T*,int,int);
 	template<class T>
@@ -96,10 +124,15 @@ public:
 	
 
 	/*SORTS FOR LINKED LISTS*/
-	//insertion sort for linked lists
+	/*
+	insertionSortLinkedList: insertion sort for linked lists
+	*/
 	template<class T>
 	Node<T>* insertionSortLinkedList(Node<T>* head);
-	//sorting by count instead of key
+	/*
+	insertionSortLinkedListByCount: sorts by the "count" field, instead of by
+	the Node's key.
+	*/
 	template<class T>
 	Node<T>* insertionSortLinkedListByCount(Node<T>* head);
 	/*
@@ -108,10 +141,13 @@ public:
 	WAY.
 	*/
 	/*
+	mergeSortLinkedList:
+	A merge sort for linked lists.
 	we will sort recursively, meaning we will begin with a sub-list of size m,
 	and then split that into a sub-list of size m/2.
 	this first function simply finds the length of the list, and then calculates
-	the maximum sub-list size m from that. it then calls the recursive equation.
+	the maximum sub-list size m from that. it then calls the recursive function,
+	passing it the maximum sub-list size and the head of the list.
 	*/
 	template<class T>
 	Node<T>* mergeSortLinkedList(Node<T>* head){
@@ -131,6 +167,7 @@ public:
 		return sortRecursion(maxM,head);
 	}
 	/*
+	sortRecursion: the recursion section for the merge sort.
 	the recursive sort works in this way:
 	it first recurses down, breaking down the sub-list size until
 	we are simply looking at single nodes. when we have the single
@@ -248,30 +285,10 @@ public:
 		//return the entire now-merged list (excluding the first node, which was a dummy)
 		return mergedListHead->getNext();
 	}
-	template<class T>
-	Node<T>* compareAdvance(Node<T>* first, Node<T>* second){
-		//the value to be returned (the node which has effectively been "popped")
-		Node<T>* val;
-		if(first == nullptr){
-			val = second;
-			second = second->getNext();
-			return val;
-		}
-		if(second == nullptr){
-			val = first;
-			first = first->getNext();
-			return val;
-		}
-		if(lessThan(second->getKey(),first->getKey())){
-			val = second;
-			second = second->getNext();
-			return val;
-		}
-		val = first;
-		first = first->getNext();
-		return val;
-	}
-	//SORT BY COUNT
+	/*
+	mergeSortLinkedListByCount/sortRecursionByCount:
+	Same merge/insertion sort as above, but using the count field.
+	*/
 	template<class T>
 	Node<T>* mergeSortLinkedListByCount(Node<T>* head){
 
@@ -289,9 +306,6 @@ public:
 	
 		return sortRecursionByCount(maxM,head);
 	}
-	/*
-	Same merge/insertion sort as above.
-	*/
 	template<class T>
 	Node<T>* sortRecursionByCount(int groupSize, Node<T>* head){
 		
@@ -401,7 +415,11 @@ public:
 /*
 DEFINITION OF FUNCTIONS
 */
-
+/*
+selectionSort/insertionSort:
+Simple sorts, taking in an array of chars, strings, or ints, and a left and
+right index. The functions do not return; they simply alter the given list.
+*/
 template<class T>
 void Metrics::selectionSort(T* vars, int leftIndex, int rightIndex){
 	//for every index 
@@ -445,6 +463,11 @@ void Metrics::insertionSort(T* vars, int leftIndex,int rightIndex){
 		vars[j] = item;
 	}
 }
+/*
+insertionSortLinkedList/insertionSortLinkedListByCount:
+A linked list insertion sort, taking the head of the list, and either sorting
+the values by the key or by the count field.
+*/
 template<class T>
 Node<T>* Metrics::insertionSortLinkedList(Node<T>* head){
 	//find the minimum. if there are multiple, then the leftmost one should be moved.
